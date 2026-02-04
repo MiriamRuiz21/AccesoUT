@@ -29,20 +29,21 @@ Opcionalmente puede integrarse:
 
 ## 📂 Estructura del proyecto
 src/
-├─ components/
-│  ├─ Header.astro
-│  ├─ Footer.astro
-│  ├─ Hero.astro
-│  └─ InfoSection.astro
-│
-├─ layouts/
-│  └─ BaseLayout.astro
-│
-├─ pages/
-│  └─ index.astro
-│
-└─ styles/
-   └─ global.css
+  components/
+    Header.astro
+    Footer.astro
+    Hero.astro
+    InfoSection.astro
+
+  layouts/
+    BaseLayout.astro
+
+  pages/
+    index.astro
+
+  styles/
+    global.css
+
 
 
 ## Autor
