@@ -1,34 +1,58 @@
-# Astro Starter Kit: Basics
+# AccesoUT
 
-```sh
-npm create astro@latest -- --template basics
-```
+Sistema web desarrollado con **Astro** para gestionar el acceso de usuarios a una plataforma informativa o institucional, integrando autenticación y diseño responsive para distintos dispositivos.
+---
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 📌 Descripción del proyecto
+AccesoUT es una aplicación web que permite a usuarios acceder a contenido protegido mediante inicio de sesión. El proyecto está diseñado con enfoque en:
 
-## 🚀 Project Structure
+- Experiencia de usuario clara
+- Navegación sencilla
+- Diseño adaptable a dispositivos móviles y escritorio
+- Arquitectura modular
+---
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🚀 Tecnologías utilizadas
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- **Astro Framework**
+- HTML semántico
+- CSS responsive (Flexbox y Grid)
+- Node.js
+- npm
+- Git
+- Visual Studio Code
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Opcionalmente puede integrarse:
+- Supabase (autenticación y base de datos)
+- React para componentes interactivos
+---
 
-## 🧞 Commands
+## 📂 Estructura del proyecto
+src/
+├─ components/
+│ ├─ Header.astro
+│ ├─ Footer.astro
+│ ├─ Hero.astro
+│ └─ InfoSection.astro
+│
+├─ layouts/
+│ └─ BaseLayout.astro
+│
+├─ pages/
+│ └─ index.astro
+│
+└─ styles/
+└─ global.css
+
+## Autor
+
+Proyecto académico desarrollado por:
+Wendoline Ruiz
+Omar García
+Cesar Estrada
+Antonio Orozco
+
+## Instalación del proyecto
 
 All commands are run from the root of the project, from a terminal:
 
@@ -41,6 +65,3 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
