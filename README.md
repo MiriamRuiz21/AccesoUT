@@ -30,19 +30,20 @@ Opcionalmente puede integrarse:
 ## 📂 Estructura del proyecto
 src/
 ├─ components/
-│ ├─ Header.astro
-│ ├─ Footer.astro
-│ ├─ Hero.astro
-│ └─ InfoSection.astro
+│  ├─ Header.astro
+│  ├─ Footer.astro
+│  ├─ Hero.astro
+│  └─ InfoSection.astro
 │
 ├─ layouts/
-│ └─ BaseLayout.astro
+│  └─ BaseLayout.astro
 │
 ├─ pages/
-│ └─ index.astro
+│  └─ index.astro
 │
 └─ styles/
-└─ global.css
+   └─ global.css
+
 
 ## Autor
 
