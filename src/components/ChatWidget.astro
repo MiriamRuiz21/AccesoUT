@@ -1,0 +1,155 @@
+<div class="chat-container">
+  <input type="checkbox" id="chat-toggle" class="chat-checkbox" />
+
+  <label for="chat-toggle" class="chat-button">
+    <span class="icon-open">💬</span>
+    <span class="icon-close">✕</span>
+  </label>
+
+  <aside class="chat-window">
+    <div class="chat-header">
+      <div class="chat-status"></div>
+      <h4>Asistente UTSJR</h4>
+    </div>
+    <div class="chat-body">
+      <div class="message bot">
+        ¡Hola! 👋 Soy tu asistente virtual. ¿Tienes dudas sobre tu registro o el acceso al campus?
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" placeholder="Escribe tu duda aquí..." />
+      <button>➤</button>
+    </div>
+  </aside>
+</div>
+
+<style>
+  /* Contenedor principal abajo a la derecha */
+  .chat-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 5000;
+    font-family: sans-serif;
+  }
+
+  .chat-checkbox { display: none; }
+
+  /* Botón circular */
+  .chat-button {
+    width: 60px;
+    height: 60px;
+    background: var(--utsjr-blue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  }
+
+  .chat-button:hover { transform: scale(1.1); }
+
+  /* Iconos del botón */
+  .icon-close { display: none; }
+
+  /* Ventana de Chat */
+  .chat-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 320px;
+    height: 400px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    /* Estado inicial: oculto y abajo */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Mostrar chat cuando el checkbox está activado */
+  .chat-checkbox:checked ~ .chat-window {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Cambiar icono del botón */
+  .chat-checkbox:checked ~ .chat-button .icon-open { display: none; }
+  .chat-checkbox:checked ~ .chat-button .icon-close { display: block; }
+
+  /* Estética interna del chat */
+  .chat-header {
+    background: var(--utsjr-blue);
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .chat-status {
+    width: 10px;
+    height: 10px;
+    background: #00ff00;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #00ff00;
+  }
+
+  .chat-body {
+    flex: 1;
+    padding: 15px;
+    background: #f9f9f9;
+    overflow-y: auto;
+  }
+
+  .message.bot {
+    background: #eee;
+    padding: 10px;
+    border-radius: 10px 10px 10px 0;
+    font-size: 0.9rem;
+    color: #333;
+    max-width: 85%;
+  }
+
+  .chat-footer {
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+    border-top: 1px solid #eee;
+  }
+
+  .chat-footer input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  .chat-footer button {
+    background: var(--utsjr-green);
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 400px) {
+    .chat-window {
+      width: 280px;
+      right: -10px;
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+<section class="mini-banner">
+  <div class="container banner-content">
+    <div class="banner-badge">
+      <span class="dot"></span> Portal Oficial
+    </div>
+    <div class="banner-text">
+      <h2>Tu seguridad es nuestra prioridad</h2>
+      <p>Sistema de Acceso UTSJR: Registro rápido y seguro.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mini-banner {
+    background: var(--utsjr-blue);
+    color: white;
+    padding: 25px 0; /* Espaciado reducido */
+    border-bottom: 4px solid var(--utsjr-green);
+  }
+
+  .banner-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .banner-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--utsjr-green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--utsjr-green);
+  }
+
+  .banner-text h2 {
+    font-size: 1.5rem; /* Tamaño más discreto */
+    margin: 0;
+    line-height: 1.2;
+    color: white;
+  }
+
+  .banner-text p {
+    margin: 5px 0 0 0;
+    opacity: 0.8;
+    font-size: 0.95rem;
+  }
+
+  /* Responsive: En móvil se apila verticalmente */
+  @media (max-width: 768px) {
+    .banner-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .mini-banner {
+      padding: 20px 0;
+    }
+  }
+</style>

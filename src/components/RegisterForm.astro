@@ -1,0 +1,157 @@
+<section id="registro" class="container section">
+  <div class="card-grid">
+    <div class="form-side">
+      <h2>Solicitud de Cita / Acceso</h2>
+      <p>Completa tus datos para agendar tu visita al campus.</p>
+      
+      <form id="appointment-form">
+        <div class="form-row">
+          <input type="text" id="name" placeholder="Nombre(s)" required />
+          <input type="text" id="paterno" placeholder="Apellido Paterno" required />
+          <input type="text" id="materno" placeholder="Apellido Materno" required />
+        </div>
+
+        <div class="form-row">  
+          <input type="email" id="email" placeholder="Correo electrónico" required />
+          <input type="tel" id="phone" placeholder="Teléfono (10 dígitos)" required />
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label for="date">Fecha de cita:</label>
+            <input type="date" id="date" required />
+          </div>
+          <select id="reason" required>
+            <option value="" disabled selected>Motivo de visita</option>
+            <option value="tramite">Trámite Académico</option>
+            <option value="visita">Visita Guiada</option>
+            <option value="proveedor">Proveedor / Servicios</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="doc">Subir identificación oficial (PDF o Imagen):</label>
+          <input type="file" id="doc" accept=".pdf, image/*" required />
+        </div>
+
+        <button type="submit" class="btn-gen">Enviar Solicitud de Cita</button>
+      </form>
+    </div>
+
+    <div class="qr-side" id="form-result">
+      <div class="placeholder">
+        <span class="icon">📅</span>
+        <p>Los detalles de tu confirmación aparecerán aquí al finalizar el registro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section { padding: 3rem 0; }
+  .card-grid { 
+    display: grid; 
+    grid-template-columns: 1.5fr 1fr; 
+    gap: 30px; 
+    background: white; 
+    padding: 40px; 
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .form-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .form-row input, .form-row select {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  .input-group label {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: var(--utsjr-blue);
+    font-weight: bold;
+  }
+
+  input, select { 
+    width: 100%; 
+    padding: 12px; 
+    margin-bottom: 15px; 
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    font-family: inherit;
+  }
+
+  .btn-gen { 
+    background: var(--utsjr-green); 
+    color: white; 
+    border: none; 
+    padding: 15px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    width: 100%; 
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+
+  .btn-gen:hover { background: var(--utsjr-blue); }
+
+  .qr-side { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    border-left: 2px dashed #eee; 
+    text-align: center;
+    padding: 20px;
+  }
+
+  .placeholder .icon { font-size: 4rem; display: block; margin-bottom: 10px; }
+
+  @media (max-width: 768px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .qr-side { border-left: none; border-top: 2px dashed #eee; padding-top: 30px; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('appointment-form') as HTMLFormElement;
+  const result = document.getElementById('form-result');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Captura de datos
+    const name = (document.getElementById('name') as HTMLInputElement).value;
+    const paterno = (document.getElementById('paterno') as HTMLInputElement).value;
+    const date = (document.getElementById('date') as HTMLInputElement).value;
+    const reason = (document.getElementById('reason') as HTMLSelectElement).value;
+
+    if (result) {
+      result.innerHTML = `
+        <div class="success-msg">
+          <div style="font-size: 3rem;">✅</div>
+          <h3>Solicitud Enviada</h3>
+          <p>Gracias, <strong>${name} ${paterno}</strong>.</p>
+          <hr style="margin: 15px 0; opacity: 0.2;">
+          <p>Tu cita para <strong>${reason}</strong> ha sido procesada para el día <strong>${date}</strong>.</p>
+          <p><small>Recibirás un correo de confirmación con los pasos a seguir.</small></p>
+          <button onclick="window.location.reload()" style="margin-top:20px; cursor:pointer; padding: 5px 10px;">Nueva Solicitud</button>
+        </div>
+      `;
+    }
+  });
+</script>

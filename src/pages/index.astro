@@ -1,11 +1,92 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Header from '../components/Header.astro';
+import Banner from '../components/Banner.astro';
+import RegisterForm from '../components/RegisterForm.astro'; // El nuevo formulario de citas
+import ChatWidget from '../components/ChatWidget.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Centro de Acceso UTSJR">
+  <Header />
+  
+  <main>
+    <Banner />
+
+    <RegisterForm />
+
+    <div class="container">
+      <div class="main-layout">
+        <section class="content">
+          <h2>Instrucciones de Acceso</h2>
+          <p>Para garantizar la seguridad de la comunidad universitaria, todos los visitantes deben seguir estos pasos:</p>
+          
+          <br />
+          
+          <article>
+            <h3>1. Registro de Solicitud</h3>
+            <p>Complete el formulario superior con sus datos personales y adjunte su identificación oficial.</p>
+          </article>
+          
+          <br />
+          
+          <article>
+            <h3>2. Confirmación</h3>
+            <p>Una vez enviada la solicitud, el sistema validará sus datos y recibirá una respuesta en su correo electrónico.</p>
+          </article>
+        </section>
+
+        <aside class="sidebar">
+          <div class="sidebar-card">
+            <h4>Avisos Importantes</h4>
+            <hr />
+            <p><small>📅 Enero 2026: El acceso peatonal por Av. La Palma estará restringido de 8:00 AM a 10:00 AM.</small></p>
+            <br />
+            <h4>Redes Sociales</h4>
+            <p>🔵 Facebook</p>
+            <p>📸 Instagram</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <ChatWidget />
+  <Footer />
 </Layout>
+
+<style>
+  /* Layout de dos columnas para instrucciones y sidebar */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    margin: 40px 0;
+  }
+
+  .sidebar-card {
+    background: white; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-card hr {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .content h3 {
+    color: var(--utsjr-green);
+    margin-bottom: 5px;
+  }
+
+  @media (max-width: 850px) {
+    .main-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

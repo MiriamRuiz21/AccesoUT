@@ -1,0 +1,55 @@
+:root {
+  --utsjr-blue: #23426C;
+  --utsjr-green: #00b049;
+  --bg-light: #f8f9fa;
+  --text-dark: #333;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Tipografía */
+h1, h2, h3 { color: var(--utsjr-blue); margin-bottom: 1rem; }
+
+/* Botones */
+.btn {
+  padding: 12px 24px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.btn-primary { background: var(--utsjr-green); color: white; border: none; cursor: pointer; }
+.btn-outline { border: 2px solid var(--utsjr-blue); color: var(--utsjr-blue); }
+.btn:hover { transform: translateY(-2px); }
+
+/* Grid del cuerpo principal */
+.main-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 30px;
+  margin: 40px 0;
+}
+
+@media (max-width: 900px) {
+  .main-layout { grid-template-columns: 1fr; }
+}

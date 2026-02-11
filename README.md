@@ -1,69 +1,37 @@
 # AccesoUT
 
-Sistema web desarrollado con **Astro** para gestionar el acceso de usuarios a una plataforma informativa o institucional, integrando autenticación y diseño responsive para distintos dispositivos.
+Sistema web desarrollado con **Astro** para gestionar el acceso de usuarios a una plataforma informativa o institucional, integrando un sistema de citas y diseño responsive.
+
 ---
 
 ## 📌 Descripción del proyecto
-AccesoUT es una aplicación web que permite a usuarios acceder a contenido protegido mediante inicio de sesión. El proyecto está diseñado con enfoque en:
+AccesoUT es una aplicación web que permite a los usuarios agendar citas y verificar su identidad para el ingreso al campus. El proyecto se enfoca en:
 
-- Experiencia de usuario clara
-- Navegación sencilla
-- Diseño adaptable a dispositivos móviles y escritorio
-- Arquitectura modular
+- Experiencia de usuario clara (UX)
+- Generación de solicitudes de acceso
+- Validación de documentos de identidad
+- Diseño adaptable (Mobile First)
+
 ---
 
 ## 🚀 Tecnologías utilizadas
-
 - **Astro Framework**
-- HTML semántico
-- CSS responsive (Flexbox y Grid)
-- Node.js
-- npm
-- Git
-- Visual Studio Code
+- HTML semántico & CSS Moderno (Grid/Flexbox)
+- TypeScript / JavaScript
+- Git & GitHub
 
-Opcionalmente puede integrarse:
-- Supabase (autenticación y base de datos)
-- React para componentes interactivos
 ---
 
 ## 📂 Estructura del proyecto
-src/
-  components/
-    Header.astro
-    Footer.astro
-    Hero.astro
-    InfoSection.astro
+- `src/components/`: Componentes modulares (Header, Banner, RegisterForm, Chat).
+- `src/layouts/`: Estructura base de las páginas.
+- `src/pages/`: Rutas y vistas principales.
 
-  layouts/
-    BaseLayout.astro
+---
 
-  pages/
-    index.astro
-
-  styles/
-    global.css
-
-
-
-## Autor
-
+## 👥 Autor
 Proyecto académico desarrollado por:
-Wendoline Ruiz
-Omar García
-Cesar Estrada
-Antonio Orozco
-
-## Instalación del proyecto
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
+- Wendoline Ruiz
+- Omar García
+- Cesar Estrada
+- Antonio Orozco

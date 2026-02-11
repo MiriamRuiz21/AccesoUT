@@ -1,0 +1,50 @@
+<section class="hero container">
+  <div class="hero-content">
+    <h1>Centro de Registro Digital</h1>
+    <p>Agiliza tu ingreso a la Universidad Tecnológica de San Juan del Río. Completa tus datos y obtén tu pase QR.</p>
+    <form id="qr-form" class="reg-form">
+      <input type="text" id="userName" placeholder="Nombre completo" required />
+      <input type="text" id="userId" placeholder="Matrícula o Folio" required />
+      <button type="submit" class="btn btn-primary">Generar mi QR de Acceso</button>
+    </form>
+  </div>
+  <div class="hero-visual" id="qr-result">
+    <div class="qr-placeholder">
+      <p>Tu código se generará aquí</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding: 80px 20px; align-items: center; }
+  .reg-form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+  .reg-form input { padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
+  .hero-visual { 
+    background: white; padding: 40px; border-radius: 15px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;
+    min-height: 250px; display: flex; justify-content: center; align-items: center;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('qr-form') as HTMLFormElement;
+  const result = document.getElementById('qr-result');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = (document.getElementById('userName') as HTMLInputElement).value;
+    const id = (document.getElementById('userId') as HTMLInputElement).value;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=UTSJR-${id}-${name}`;
+    
+    if (result) {
+      result.innerHTML = `
+        <div>
+          <h3 style="margin-bottom:15px">¡Acceso Generado!</h3>
+          <img src="${qrUrl}" alt="QR" />
+          <p style="margin-top:10px"><strong>${name}</strong></p>
+          <button onclick="window.print()" class="btn btn-outline" style="margin-top:15px">Imprimir Pase</button>
+        </div>
+      `;
+    }
+  });
+</script>
