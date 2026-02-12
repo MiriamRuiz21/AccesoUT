@@ -1,0 +1,98 @@
+<button id="theme-toggle" class="theme-switch" aria-label="Cambiar modo de iluminación">
+  <div class="switch-track">
+    <div class="switch-handle">
+      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </div>
+  </div>
+</button>
+
+<style>
+  .theme-switch {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  /* El fondo negro redondeado (pista) */
+  .switch-track {
+    width: 54px;
+    height: 28px;
+    background-color: #000;
+    border-radius: 20px;
+    position: relative;
+    padding: 3px;
+    transition: background-color 0.3s;
+  }
+
+  /* El círculo que se mueve */
+  .switch-handle {
+    width: 22px;
+    height: 22px;
+    background-color: #007bff; /* AZUL INSTITUCIONAL */
+    border-radius: 50%;
+    position: absolute;
+    left: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+
+  /* Cambia el color de la luna cuando esté en modo oscuro para que resalte */
+  :global([data-theme="dark"]) .switch-handle {
+    transform: translateX(26px);
+    background-color: #0056b3; /* Azul más oscuro para la noche */
+  }
+
+  /* Iconos dentro del círculo */
+  .sun-icon, .moon-icon {
+    width: 14px;
+    height: 14px;
+    color: #000;
+  }
+
+  /* Lógica de visibilidad de iconos */
+  .moon-icon { display: none; }
+
+  /* Estado: MODO OSCURO ACTIVADO */
+  :global([data-theme="dark"]) .switch-handle {
+    transform: translateX(26px);
+    background-color: #f5f5f5; /* Color claro para la luna */
+  }
+
+  :global([data-theme="dark"]) .sun-icon { display: none; }
+  :global([data-theme="dark"]) .moon-icon { display: block; }
+</style>
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  const doc = document.documentElement;
+
+  // Cargar preferencia guardada
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  doc.setAttribute('data-theme', savedTheme);
+
+  toggle?.addEventListener('click', () => {
+    const isDark = doc.getAttribute('data-theme') === 'dark';
+    const newTheme = isDark ? 'light' : 'dark';
+    
+    doc.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+</script>

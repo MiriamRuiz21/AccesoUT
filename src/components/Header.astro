@@ -1,127 +1,169 @@
-<header class="header">
-  <nav class="container nav-wrapper">
-    <label for="menu-toggle" class="hamburger-label">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </label>
+---
+import ThemeToggle from './ThemeToggle.astro';
+---
 
-    <div class="logo">
-      <a href="/"><strong>UTSJR</strong> Acceso</a>
-    </div>
-
-    <input type="checkbox" id="menu-toggle" class="menu-checkbox" />
-    <label for="menu-toggle" class="menu-overlay"></label>
-
-    <aside class="nav-sidebar">
-      <div class="sidebar-header">
-        <h3>MENÚ</h3>
-        <label for="menu-toggle" class="close-btn">✕</label>
+<header class="ut-header">
+  <div class="top-bar">
+    <div class="container top-content">
+      <div class="logos">
+        <img src="/logo-gobierno.png" alt="" class="logo-img" />
+        <div class="separator"></div>
+        <span class="uni-name">UT <strong>San Juan</strong></span>
       </div>
-      <ul class="nav-menu">
-        <li><a href="/">Inicio</a></li>
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#registro" class="active">Centro de Registro</a></li>
-        <li><a href="#ayuda">Ayuda</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+      <div class="top-links">
+        <a href="https://www.utsjr.edu.mx" target="_blank">Portal UTSJR</a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="main-nav">
+    <div class="container nav-container">
+      <ul class="nav-links">
+        <li class="active"><a href="/">Inicio</a></li>
+        <li><a href="#servicios">Servicios de Acceso</a></li>
+        <li><a href="#citas">Citas</a></li>
+        <li><a href="#directorio">Directorio</a></li>
       </ul>
-    </aside>
+      
+      <div class="nav-actions">
+        <ThemeToggle />
+      </div>
+    </div>
   </nav>
 </header>
 
 <style>
+  /* Variables de Color Institucional */
   :root {
-    --utsjr-blue: #003b5c;
-    --utsjr-green: #00b049; /* Verde UTSJR */
-    --utsjr-green-light: #00d658;
+    --utsjr-green: #00b049;
+    --utsjr-dark-green: #008f3b;
+    --header-height-top: 50px;
+    --header-height-main: 45px;
   }
 
-  /* HEADER CON COLOR VERDE COMBINADO */
-  .header {
-    /* Degradado que combina el verde con un toque de profundidad */
-    background: linear-gradient(135deg, var(--utsjr-green) 0%, #008f3b 100%);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  /* CONFIGURACIÓN PARA QUE LA BARRA TE SIGA (STICKY) */
+  .ut-header {
+    width: 100%;
     position: sticky;
     top: 0;
-    z-index: 2000;
-    border-bottom: 3px solid var(--utsjr-blue); /* Línea azul para combinar */
+    z-index: 9999; /* Prioridad máxima sobre otros elementos */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: 'Montserrat', sans-serif, system-ui;
   }
 
-  .nav-wrapper {
+  /* BARRA SUPERIOR (BLANCA) */
+  .top-bar {
+    background: #ffffff;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .top-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.7rem 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
 
-  .logo a {
-    font-size: 1.6rem;
-    color: white; /* Texto blanco sobre fondo verde */
+  .logos {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .logo-img {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .separator {
+    width: 1px;
+    height: 25px;
+    background: #cccccc;
+  }
+
+  .uni-name {
+    font-size: 1.1rem;
+    color: #333333;
+    letter-spacing: -0.5px;
+  }
+
+  .top-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .top-links a {
+    font-size: 13px;
+    color: #545454;
     text-decoration: none;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    transition: color 0.2s;
   }
 
-  /* Hamburguesa en blanco para resaltar */
-  .hamburger-line {
-    width: 28px;
-    height: 3px;
-    background: white;
-    border-radius: 3px;
-    margin-bottom: 5px;
-    display: block;
+  .top-links a:hover {
+    color: var(--utsjr-green);
   }
 
-  /* SIDEBAR (Menú lateral que ya teníamos) */
-  .nav-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 280px;
-    height: 100vh;
-    background: var(--utsjr-blue);
-    transform: translateX(-100%);
-    transition: transform 0.4s ease;
-    z-index: 3000;
-  }
-
-  .menu-checkbox:checked ~ .nav-sidebar {
-    transform: translateX(0);
-  }
-
-  .sidebar-header {
-    padding: 20px;
+  /* BARRA PRINCIPAL (VERDE) */
+  .main-nav {
     background: var(--utsjr-green);
-    color: white;
+    height: var(--header-height-main);
+  }
+
+  .nav-container {
     display: flex;
     justify-content: space-between;
-  }
-
-  .nav-menu { list-style: none; padding: 20px 0; }
-  .nav-menu a {
-    display: block;
-    padding: 15px 25px;
-    color: white;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-
-  .menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
     height: 100%;
-    background: rgba(0,0,0,0.5);
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
-    z-index: 2500;
   }
 
-  .menu-checkbox:checked ~ .menu-overlay {
-    visibility: visible;
-    opacity: 1;
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
   }
 
-  .menu-checkbox { display: none; }
+  .nav-links li {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 100%;
+    transition: background 0.3s;
+  }
+
+  .nav-links li:hover, .nav-links li.active {
+    background: var(--utsjr-dark-green);
+  }
+
+  .nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  /* RESPONSIVIDAD: Ajustes para móvil */
+  @media (max-width: 768px) {
+    .nav-links, .top-links {
+      display: none; /* Se ocultan para que no se amontone el diseño */
+    }
+    
+    .top-content, .nav-container {
+      justify-content: center;
+      gap: 20px;
+    }
+  }
 </style>

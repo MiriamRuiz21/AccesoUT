@@ -53,3 +53,39 @@ h1, h2, h3 { color: var(--utsjr-blue); margin-bottom: 1rem; }
 @media (max-width: 900px) {
   .main-layout { grid-template-columns: 1fr; }
 }
+
+:root {
+  /* Modo Claro (Default) */
+  --bg-color: #f4f7f6;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --input-bg: #ffffff;
+  --input-border: #dddddd;
+}
+
+[data-theme="dark"] {
+  /* Modo Nocturno */
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --input-bg: #2d2d2d;
+  --input-border: #444444;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Aplicar variables a las tarjetas y formularios */
+.card-grid, .sidebar-card, .chat-window {
+  background-color: v ar(--card-bg) !important;
+  color: var(--text-color);
+}
+
+input, select, textarea {
+  background-color: var(--input-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--input-border) !important;
+}

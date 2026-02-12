@@ -18,16 +18,28 @@
 
         <div class="form-row">
           <div class="input-group">
-            <label for="date">Fecha de cita:</label>
+            <label for="date">Fecha de cita (Lunes a Viernes):</label>
             <input type="date" id="date" required />
+            <span id="date-error" style="color: #d9534f; font-size: 0.75rem; display: none; margin-top: -10px; margin-bottom: 10px;">
+              * No hay servicio en fines de semana.
+            </span>
           </div>
-          <select id="reason" required>
-            <option value="" disabled selected>Motivo de visita</option>
-            <option value="tramite">Trámite Académico</option>
-            <option value="visita">Visita Guiada</option>
-            <option value="proveedor">Proveedor / Servicios</option>
-            <option value="otro">Otro</option>
-          </select>
+          
+          <div class="input-group">
+            <label for="reason">Motivo de visita:</label>
+            <select id="reason" required>
+              <option value="" disabled selected>Seleccione una opción</option>
+              <option value="tramite">Trámite Académico</option>
+              <option value="visita">Visita Guiada</option>
+              <option value="proveedor">Proveedor / Servicios</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="other-reason-container" style="display: none;" class="input-group">
+          <label for="other_reason">Especifique su motivo o lugar de visita:</label>
+          <input type="text" id="other_reason" placeholder="Ej: Laboratorio de Pesados, Rectoría, etc." />
         </div>
 
         <div class="input-group">
@@ -48,6 +60,104 @@
   </div>
 </section>
 
+<style>
+  /* Se mantienen tus estilos originales */
+  .section { padding: 3rem 0; }
+  .card-grid { 
+    display: grid; 
+    grid-template-columns: 1.5fr 1fr; 
+    gap: 30px; 
+    background: white; 
+    padding: 40px; 
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .form-row input, .form-row select { flex: 1; min-width: 140px; }
+  .input-group { display: flex; flex-direction: column; margin-bottom: 15px; width: 100%; }
+  .input-group label { font-size: 0.85rem; margin-bottom: 5px; color: var(--utsjr-blue); font-weight: bold; }
+  input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; }
+  .btn-gen { background: var(--utsjr-green); color: white; border: none; padding: 15px; cursor: pointer; border-radius: 5px; width: 100%; font-weight: bold; font-size: 1rem; transition: 0.3s; }
+  .btn-gen:hover { background: var(--utsjr-blue); }
+  .qr-side { display: flex; flex-direction: column; align-items: center; justify-content: center; border-left: 2px dashed #eee; text-align: center; padding: 20px; }
+  .placeholder .icon { font-size: 4rem; display: block; margin-bottom: 10px; }
+  @media (max-width: 768px) { .card-grid { grid-template-columns: 1fr; } .qr-side { border-left: none; border-top: 2px dashed #eee; padding-top: 30px; } }
+</style>
+
+<script>
+  const form = document.getElementById('appointment-form') as HTMLFormElement;
+  const result = document.getElementById('form-result');
+  const dateInput = document.getElementById('date') as HTMLInputElement;
+  const dateError = document.getElementById('date-error');
+  
+  // Referencias para el campo "Otro"
+  const reasonSelect = document.getElementById('reason') as HTMLSelectElement;
+  const otherReasonContainer = document.getElementById('other-reason-container');
+  const otherReasonInput = document.getElementById('other_reason') as HTMLInputElement;
+
+  // --- LÓGICA PARA MOSTRAR CAMPO "OTRO" ---
+  reasonSelect?.addEventListener('change', (e) => {
+    const target = e.target as HTMLSelectElement;
+    if (target.value === 'otro') {
+      if (otherReasonContainer) otherReasonContainer.style.display = 'block';
+      otherReasonInput.required = true;
+    } else {
+      if (otherReasonContainer) otherReasonContainer.style.display = 'none';
+      otherReasonInput.required = false;
+      otherReasonInput.value = ''; // Limpiar si cambian de opinión
+    }
+  });
+
+  // --- LÓGICA DE RESTRICCIÓN DE FECHAS ---
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    dateInput.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      const dateParts = target.value.split('-');
+      const selectedDate = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+      const day = selectedDate.getDay();
+
+      if (day === 0 || day === 6) {
+        alert('El campus UTSJR no recibe visitas en fines de semana. Por favor selecciona un día de Lunes a Viernes.');
+        target.value = '';
+        if (dateError) dateError.style.display = 'block';
+      } else {
+        if (dateError) dateError.style.display = 'none';
+      }
+    });
+  }
+
+  // --- LÓGICA DE ENVÍO ---
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const name = (document.getElementById('name') as HTMLInputElement).value;
+    const paterno = (document.getElementById('paterno') as HTMLInputElement).value;
+    const date = (document.getElementById('date') as HTMLInputElement).value;
+    let reason = (document.getElementById('reason') as HTMLSelectElement).value;
+    
+    // Si eligió otro, usamos el valor del input de texto
+    if (reason === 'otro') {
+      reason = `Otro (${otherReasonInput.value})`;
+    }
+
+    if (result) {
+      result.innerHTML = `
+        <div class="success-msg">
+          <div style="font-size: 3rem;">✅</div>
+          <h3>Solicitud Enviada</h3>
+          <p>Gracias, <strong>${name} ${paterno}</strong>.</p>
+          <hr style="margin: 15px 0; opacity: 0.2;">
+          <p>Tu cita para <strong>${reason}</strong> ha sido procesada para el día <strong>${date}</strong>.</p>
+          <p><small>Recibirás un correo de confirmación con los pasos a seguir.</small></p>
+          <button onclick="window.location.reload()" style="margin-top:20px; cursor:pointer; padding: 8px 15px; border-radius:5px; border:1px solid #ddd;">Nueva Solicitud</button>
+        </div>
+      `;
+    }
+  });
+</script>
 <style>
   .section { padding: 3rem 0; }
   .card-grid { 
