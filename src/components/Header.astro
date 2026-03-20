@@ -18,7 +18,14 @@ import ThemeToggle from './ThemeToggle.astro';
 
   <nav class="main-nav">
     <div class="container nav-container">
-      <ul class="nav-links">
+      <!-- Hamburger toggle (solo móvil) -->
+      <button class="hamburger" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <ul class="nav-links" id="nav-links">
         <li class="active"><a href="/">Inicio</a></li>
         <li><a href="#servicios">Servicios de Acceso</a></li>
         <li><a href="#citas">Citas</a></li>
@@ -33,29 +40,28 @@ import ThemeToggle from './ThemeToggle.astro';
 </header>
 
 <style>
-  /* Variables de Color Institucional */
   :root {
     --utsjr-green: #00b049;
     --utsjr-dark-green: #008f3b;
     --header-height-top: 50px;
-    --header-height-main: 45px;
+    --header-height-main: 48px;
   }
 
-  /* CONFIGURACIÓN PARA QUE LA BARRA TE SIGA (STICKY) */
   .ut-header {
     width: 100%;
     position: sticky;
     top: 0;
-    z-index: 9999; /* Prioridad máxima sobre otros elementos */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
     font-family: 'Montserrat', sans-serif, system-ui;
   }
 
-  /* BARRA SUPERIOR (BLANCA) */
+  /* ── BARRA SUPERIOR ── */
   .top-bar {
-    background: #ffffff;
+    background: var(--card-bg, #ffffff);
     padding: 10px 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--divider, #e2e8f0);
+    transition: background-color 0.3s;
   }
 
   .top-content {
@@ -64,7 +70,7 @@ import ThemeToggle from './ThemeToggle.astro';
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
   }
 
   .logos {
@@ -81,14 +87,14 @@ import ThemeToggle from './ThemeToggle.astro';
 
   .separator {
     width: 1px;
-    height: 25px;
-    background: #cccccc;
+    height: 24px;
+    background: var(--divider, #cccccc);
   }
 
   .uni-name {
-    font-size: 1.1rem;
-    color: #333333;
-    letter-spacing: -0.5px;
+    font-size: 1.05rem;
+    color: var(--text-color, #333333);
+    letter-spacing: -0.3px;
   }
 
   .top-links {
@@ -98,19 +104,21 @@ import ThemeToggle from './ThemeToggle.astro';
 
   .top-links a {
     font-size: 13px;
-    color: #545454;
+    color: var(--text-muted, #6b7c93);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.25s;
+    font-weight: 500;
   }
 
   .top-links a:hover {
     color: var(--utsjr-green);
   }
 
-  /* BARRA PRINCIPAL (VERDE) */
+  /* ── BARRA PRINCIPAL (VERDE) ── */
   .main-nav {
-    background: var(--utsjr-green);
+    background: linear-gradient(135deg, var(--utsjr-green) 0%, var(--utsjr-dark-green) 100%);
     height: var(--header-height-main);
+    position: relative;
   }
 
   .nav-container {
@@ -119,7 +127,7 @@ import ThemeToggle from './ThemeToggle.astro';
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
     height: 100%;
   }
 
@@ -136,18 +144,42 @@ import ThemeToggle from './ThemeToggle.astro';
     align-items: center;
     padding: 0 20px;
     height: 100%;
+    position: relative;
     transition: background 0.3s;
   }
 
-  .nav-links li:hover, .nav-links li.active {
-    background: var(--utsjr-dark-green);
+  .nav-links li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 70%;
+    height: 3px;
+    background: white;
+    border-radius: 3px 3px 0 0;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-links li:hover::after,
+  .nav-links li.active::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  .nav-links li:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-links li.active {
+    background: rgba(0, 0, 0, 0.12);
   }
 
   .nav-links a {
     color: #ffffff;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 500;
+    letter-spacing: 0.01em;
   }
 
   .nav-actions {
@@ -155,15 +187,113 @@ import ThemeToggle from './ThemeToggle.astro';
     align-items: center;
   }
 
-  /* RESPONSIVIDAD: Ajustes para móvil */
+  /* ── HAMBURGER (oculto en escritorio) ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 10;
+  }
+
+  .hamburger-line {
+    width: 24px;
+    height: 2.5px;
+    background: white;
+    border-radius: 3px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .hamburger.open .hamburger-line:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+  .hamburger.open .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open .hamburger-line:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .nav-links, .top-links {
-      display: none; /* Se ocultan para que no se amontone el diseño */
+    .top-links {
+      display: none;
     }
-    
+
+    .hamburger {
+      display: flex;
+    }
+
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      height: auto;
+      background: linear-gradient(180deg, var(--utsjr-dark-green), #006b2d);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .nav-links.open {
+      max-height: 300px;
+    }
+
+    .nav-links li {
+      padding: 0;
+      height: auto;
+    }
+
+    .nav-links li::after {
+      display: none;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 14px 24px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-links li:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
     .top-content, .nav-container {
-      justify-content: center;
-      gap: 20px;
+      justify-content: space-between;
     }
   }
 </style>
+
+<script>
+  function initHamburger() {
+    const btn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+
+    btn?.addEventListener('click', () => {
+      btn.classList.toggle('open');
+      navLinks?.classList.toggle('open');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+    });
+
+    // Cerrar menú al hacer click en un enlace
+    navLinks?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        btn?.classList.remove('open');
+        navLinks.classList.remove('open');
+        btn?.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initHamburger);
+  document.addEventListener('astro:page-load', initHamburger);
+</script>

@@ -61,7 +61,6 @@
 </section>
 
 <style>
-  /* Se mantienen tus estilos originales */
   .section { padding: 3rem 0; }
   .card-grid { 
     display: grid; 
@@ -104,7 +103,7 @@
     } else {
       if (otherReasonContainer) otherReasonContainer.style.display = 'none';
       otherReasonInput.required = false;
-      otherReasonInput.value = ''; // Limpiar si cambian de opinión
+      otherReasonInput.value = '';
     }
   });
 
@@ -138,7 +137,6 @@
     const date = (document.getElementById('date') as HTMLInputElement).value;
     let reason = (document.getElementById('reason') as HTMLSelectElement).value;
     
-    // Si eligió otro, usamos el valor del input de texto
     if (reason === 'otro') {
       reason = `Otro (${otherReasonInput.value})`;
     }
@@ -244,7 +242,6 @@
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Captura de datos
     const name = (document.getElementById('name') as HTMLInputElement).value;
     const paterno = (document.getElementById('paterno') as HTMLInputElement).value;
     const date = (document.getElementById('date') as HTMLInputElement).value;

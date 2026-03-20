@@ -1,5 +1,5 @@
 <section class="hero container">
-  <div class="hero-content">
+  <div class="hero-content reveal-left">
     <h1>Centro de Registro Digital</h1>
     <p>Agiliza tu ingreso a la Universidad Tecnológica de San Juan del Río. Completa tus datos y obtén tu pase QR.</p>
     <form id="qr-form" class="reg-form">
@@ -8,21 +8,135 @@
       <button type="submit" class="btn btn-primary">Generar mi QR de Acceso</button>
     </form>
   </div>
-  <div class="hero-visual" id="qr-result">
+  <div class="hero-visual reveal-right" id="qr-result">
     <div class="qr-placeholder">
+      <div class="qr-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+          <rect x="14" y="14" width="3" height="3"></rect>
+          <line x1="21" y1="14" x2="21" y2="14.01"></line>
+          <line x1="21" y1="21" x2="21" y2="21.01"></line>
+        </svg>
+      </div>
       <p>Tu código se generará aquí</p>
     </div>
   </div>
 </section>
 
 <style>
-  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; padding: 80px 20px; align-items: center; }
-  .reg-form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-  .reg-form input { padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
-  .hero-visual { 
-    background: white; padding: 40px; border-radius: 15px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;
-    min-height: 250px; display: flex; justify-content: center; align-items: center;
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 70px 24px;
+    align-items: center;
+  }
+
+  .hero-content h1 {
+    background: linear-gradient(135deg, var(--utsjr-blue) 0%, var(--utsjr-blue-light, #2e5590) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+
+  :global([data-theme="dark"]) .hero-content h1 {
+    background: linear-gradient(135deg, #a5c4e8 0%, #7faed4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-content p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 0.5rem;
+  }
+
+  .reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .reg-form input {
+    padding: 14px 16px;
+    border: 1.5px solid var(--input-border, #d1d9e6);
+    border-radius: var(--radius-sm, 8px);
+    font-size: 0.95rem;
+    transition: all 0.25s;
+  }
+
+  .reg-form input:focus {
+    border-color: var(--utsjr-green);
+    box-shadow: 0 0 0 3px rgba(0,176,73,0.1);
+  }
+
+  .hero-visual {
+    background: var(--card-bg, white);
+    padding: 48px 40px;
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: var(--shadow-lg, 0 12px 40px rgba(35,66,108,0.10));
+    text-align: center;
+    min-height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--divider, #e2e8f0);
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+
+  /* Acento decorativo */
+  .hero-visual::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--utsjr-green), var(--utsjr-blue));
+    border-radius: var(--radius-lg, 16px) var(--radius-lg, 16px) 0 0;
+  }
+
+  .qr-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .qr-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0,176,73,0.08), rgba(35,66,108,0.06));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--utsjr-blue);
+  }
+
+  :global([data-theme="dark"]) .qr-icon {
+    background: linear-gradient(135deg, rgba(0,176,73,0.15), rgba(35,66,108,0.15));
+    color: #a5c4e8;
+  }
+
+  .qr-placeholder p {
+    font-size: 0.95rem;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding: 50px 24px;
+    }
   }
 </style>
 
@@ -40,9 +154,9 @@
       result.innerHTML = `
         <div>
           <h3 style="margin-bottom:15px">¡Acceso Generado!</h3>
-          <img src="${qrUrl}" alt="QR" />
-          <p style="margin-top:10px"><strong>${name}</strong></p>
-          <button onclick="window.print()" class="btn btn-outline" style="margin-top:15px">Imprimir Pase</button>
+          <img src="${qrUrl}" alt="QR" style="border-radius:12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" />
+          <p style="margin-top:12px"><strong>${name}</strong></p>
+          <button onclick="window.print()" class="btn btn-outline" style="margin-top:18px">Imprimir Pase</button>
         </div>
       `;
     }

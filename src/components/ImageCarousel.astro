@@ -1,0 +1,346 @@
+---
+/**
+ * ImageCarousel.astro
+ * Carrusel de imágenes autocontenido.
+ * Colocar justo debajo de Banner.astro en tu layout:
+ *
+ *   <Banner />
+ *   <ImageCarousel />
+ *   <HeroRegistro />
+ *   ...
+ */
+---
+
+<section class="carousel-wrapper">
+  <div class="carousel" id="main-carousel">
+    <!-- Slides -->
+    <div class="carousel-track">
+      <div class="carousel-slide active" data-index="0">
+        <img src="https://www.eduopinions.com/wp-content/uploads/2017/10/Universidad-Tecnol%C3%B3gica-de-San-Juan-del-R%C3%ADo-UTSJR-campus-610x229.jpg" alt="Campus UTSJR" />
+        <div class="carousel-caption">
+          <p>Campus UTSJR</p>
+        </div>
+      </div>
+      <div class="carousel-slide" data-index="1">
+        <img src="https://rotativo.com.mx/media-library/universidad-tecnologica-de-san-juan-del-rio-refrenda-maestria-en-tecnologia-aplicada-en-el-sistema-nacional-de-posgrados-secihti.jpg?id=63853594&width=1245&height=700&quality=50&coordinates=1,0,1,0" alt="UTSJR Maestría en Tecnología Aplicada" />
+        <div class="carousel-caption">
+          <p>Maestría en Tecnología Aplicada</p>
+        </div>
+      </div>
+      <div class="carousel-slide" data-index="2">
+        <img src="https://mexicoindustry.com/admin/images/notas/2023/01/la-universidad-tecnologica-de-san-juan-del-rio-invita-a-formarse-como-ingeniero-en-sistemas-productivos-16922.JPG" alt="Ingeniería en Sistemas Productivos UTSJR" />
+        <div class="carousel-caption">
+          <p>Ingeniería en Sistemas Productivos</p>
+        </div>
+      </div>
+      <div class="carousel-slide" data-index="3">
+        <img src="https://educacionmaestros.com/wp-content/uploads/2021/02/carreras-universidad-tecnologica-san-juan-rio-utsjr.jpg" alt="Carreras UTSJR" />
+        <div class="carousel-caption">
+          <p>Oferta Educativa UTSJR</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles Prev / Next -->
+    <button class="carousel-btn carousel-prev" id="carousel-prev" aria-label="Anterior">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="carousel-btn carousel-next" id="carousel-next" aria-label="Siguiente">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Indicadores -->
+    <div class="carousel-indicators">
+      <button class="carousel-dot active" data-slide="0" aria-label="Slide 1"></button>
+      <button class="carousel-dot" data-slide="1" aria-label="Slide 2"></button>
+      <button class="carousel-dot" data-slide="2" aria-label="Slide 3"></button>
+      <button class="carousel-dot" data-slide="3" aria-label="Slide 4"></button>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="carousel-progress">
+      <div class="carousel-progress-bar" id="carousel-progress-bar"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .carousel-wrapper {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #111;
+  }
+
+  /* ── Track & Slides ── */
+  .carousel-track {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 21 / 4;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-track {
+      aspect-ratio: 16 / 4.5;
+    }
+  }
+
+  .carousel-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+  }
+
+  .carousel-slide.leaving {
+    opacity: 0;
+    transform: scale(0.97);
+    z-index: 1;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Caption ── */
+  .carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 50px 40px 28px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    z-index: 3;
+  }
+
+  .carousel-caption p {
+    color: white;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Botones Prev / Next ── */
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    opacity: 0;
+  }
+
+  .carousel:hover .carousel-btn {
+    opacity: 1;
+  }
+
+  .carousel-btn:hover {
+    background: rgba(0,176,73,0.6);
+    border-color: rgba(0,176,73,0.8);
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .carousel-btn:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .carousel-prev { left: 20px; }
+  .carousel-next { right: 20px; }
+
+  @media (max-width: 768px) {
+    .carousel-btn {
+      opacity: 1;
+      width: 40px;
+      height: 40px;
+    }
+    .carousel-prev { left: 12px; }
+    .carousel-next { right: 12px; }
+  }
+
+  /* ── Indicadores (Dots) ── */
+  .carousel-indicators {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: flex;
+    gap: 10px;
+  }
+
+  .carousel-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.5);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s;
+  }
+
+  .carousel-dot.active {
+    background: #fff;
+    border-color: #fff;
+    transform: scale(1.25);
+    box-shadow: 0 0 10px rgba(255,255,255,0.4);
+  }
+
+  .carousel-dot:hover {
+    border-color: white;
+    background: rgba(255,255,255,0.4);
+  }
+
+  /* ── Barra de Progreso ── */
+  .carousel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    z-index: 5;
+  }
+
+  .carousel-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--utsjr-green, #00b049), #00d458);
+    width: 0%;
+    border-radius: 0 3px 3px 0;
+  }
+</style>
+
+<script>
+  function initMainCarousel() {
+    const carousel = document.getElementById('main-carousel');
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    const dots = carousel.querySelectorAll('.carousel-dot');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    const progressBar = document.getElementById('carousel-progress-bar') as HTMLElement;
+    const INTERVAL = 5000; // ms
+
+    if (slides.length <= 1) return;
+
+    let current = 0;
+    let autoplayId: ReturnType<typeof setInterval> | null = null;
+    let progressId: ReturnType<typeof setInterval> | null = null;
+    let progressWidth = 0;
+
+    function goTo(index: number) {
+      if (index === current) return;
+
+      slides[current].classList.remove('active');
+      slides[current].classList.add('leaving');
+
+      setTimeout(() => {
+        slides.forEach((s) => s.classList.remove('leaving'));
+      }, 900);
+
+      current = ((index % slides.length) + slides.length) % slides.length;
+      slides[current].classList.add('active');
+
+      dots.forEach((d) => d.classList.remove('active'));
+      dots[current]?.classList.add('active');
+
+      resetProgress();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function resetProgress() {
+      progressWidth = 0;
+      if (progressBar) progressBar.style.width = '0%';
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      progressId = setInterval(() => {
+        progressWidth += 100 / (INTERVAL / 50);
+        if (progressBar) progressBar.style.width = Math.min(progressWidth, 100) + '%';
+      }, 50);
+      autoplayId = setInterval(next, INTERVAL);
+    }
+
+    function stopAutoplay() {
+      if (autoplayId) clearInterval(autoplayId);
+      if (progressId) clearInterval(progressId);
+      autoplayId = null;
+      progressId = null;
+    }
+
+    // Botones
+    nextBtn?.addEventListener('click', () => { next(); startAutoplay(); });
+    prevBtn?.addEventListener('click', () => { prev(); startAutoplay(); });
+
+    // Dots
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => { goTo(i); startAutoplay(); });
+    });
+
+    // Pausar en hover, reanudar al salir
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+
+    // Swipe en móvil
+    let touchX = 0;
+    carousel.addEventListener('touchstart', (e) => {
+      touchX = (e as TouchEvent).changedTouches[0].screenX;
+      stopAutoplay();
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+      const diff = touchX - (e as TouchEvent).changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? next() : prev();
+      }
+      startAutoplay();
+    }, { passive: true });
+
+    // Arrancar
+    startAutoplay();
+  }
+
+  document.addEventListener('DOMContentLoaded', initMainCarousel);
+  document.addEventListener('astro:page-load', initMainCarousel);
+</script>
