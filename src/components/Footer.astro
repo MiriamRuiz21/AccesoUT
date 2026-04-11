@@ -68,47 +68,53 @@
 
 <style>
   .footer {
-    background: linear-gradient(180deg, var(--utsjr-blue) 0%, #19304f 100%);
+    background: var(--gradient-header, linear-gradient(135deg, #0D1B2A, #0F4C75));
     color: white;
     padding: 56px 0 0 0;
     margin-top: 50px;
     position: relative;
   }
 
-  /* Acento superior */
+  /* Línea separadora institucional superior */
   .footer::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--utsjr-green), var(--utsjr-blue), var(--utsjr-green));
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-accent, #00A688), var(--color-primary, #0F4C75), var(--color-accent-light, #00C9A4));
   }
 
   .footer-grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
     gap: 40px;
+    text-align: center;
+    justify-items: center;
   }
 
-  /* ── Títulos ── */
+  /* Títulos */
   .footer-col h3 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
     font-size: 1.3rem;
     font-weight: 800;
     color: white;
     margin-bottom: 0.75rem;
+    -webkit-text-fill-color: white;
+    background: none;
   }
 
   .footer-col h4 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
     font-size: 0.8rem;
     font-weight: 700;
     color: rgba(255,255,255,0.9);
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+    -webkit-text-fill-color: rgba(255,255,255,0.9);
+    background: none;
   }
 
   .footer-col > p {
@@ -118,52 +124,56 @@
     margin-bottom: 1rem;
   }
 
-  /* ── Links ── */
+  /* Links */
   .footer-col a {
-    color: rgba(165, 214, 167, 0.85);
+    color: var(--color-accent-light, #00C9A4);
     text-decoration: none;
     font-size: 0.88rem;
     display: block;
-    padding: 4px 0;
-    transition: color 0.25s, padding-left 0.25s;
+    padding: 5px 0;
+    transition: color 0.25s, padding-left 0.25s, background 0.25s;
+    border-radius: 4px;
   }
 
   .footer-col a:hover {
     color: #fff;
-    padding-left: 6px;
+    padding-left: 8px;
+    background: rgba(255,255,255,0.04);
   }
 
-  /* ── Social Icons ── */
+  /* Social Icons */
   .footer-social {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-top: 4px;
+    margin-top: 8px;
+    justify-content: center;
   }
 
   .footer-social a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.7);
     padding: 0;
     transition: all 0.3s;
   }
 
   .footer-social a:hover {
-    background: var(--utsjr-green);
-    border-color: var(--utsjr-green);
+    background: var(--color-accent, #00A688);
+    border-color: var(--color-accent, #00A688);
     color: white;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,166,136,0.35);
     padding-left: 0;
   }
 
-  /* ── Contacto ── */
+  /* Contacto */
   .footer-contact {
     margin-top: 16px;
     padding-top: 12px;
@@ -171,18 +181,18 @@
   }
 
   .footer-contact p {
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.5);
     font-size: 0.82rem;
     margin-bottom: 3px;
     line-height: 1.5;
   }
 
-  /* ── Barra inferior ── */
+  /* Barra inferior */
   .footer-bottom {
     margin-top: 40px;
     padding: 16px 0;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    background: rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.15);
   }
 
   .footer-bottom-inner {
@@ -193,12 +203,12 @@
 
   .footer-bottom p {
     text-align: center;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.3);
     font-size: 0.78rem;
     margin: 0;
   }
 
-  /* ── Responsive ── */
+  /* Responsive */
   @media (max-width: 900px) {
     .footer-grid {
       grid-template-columns: 1fr 1fr;

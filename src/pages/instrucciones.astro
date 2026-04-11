@@ -1,0 +1,223 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Banner from '../components/Banner.astro';
+import ChatWidget from '../components/ChatWidget.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Instrucciones de Acceso — UTSJR">
+  <Header />
+
+  <main>
+    <Banner />
+
+    <div class="container">
+      <section class="instructions-section reveal">
+        <div class="instructions-header">
+          <h1>Instrucciones de Acceso</h1>
+          <p>Siga estos pasos para validar su solicitud de cita al campus:</p>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card reveal-scale" style="--delay: 0.1s;">
+            <div class="step-number">1</div>
+            <div class="step-icon-fa"><i class="fas fa-calendar-check"></i></div>
+            <div class="step-content">
+              <h3>Solicitud de Cita / Acceso</h3>
+              <p>Completa tus datos personales, selecciona la <strong>fecha de tu cita</strong> y el <strong>motivo de tu visita</strong>.</p>
+            </div>
+          </article>
+
+          <article class="step-card reveal-scale" style="--delay: 0.2s;">
+            <div class="step-number">2</div>
+            <div class="step-icon-fa"><i class="fas fa-id-card"></i></div>
+            <div class="step-content">
+              <h3>Documentación</h3>
+              <p>Es obligatorio <strong>subir tu identificación oficial</strong> (PDF o imagen) para validar tu identidad.</p>
+            </div>
+          </article>
+
+          <article class="step-card reveal-scale" style="--delay: 0.3s;">
+            <div class="step-number">3</div>
+            <div class="step-icon-fa"><i class="fas fa-qrcode"></i></div>
+            <div class="step-content">
+              <h3>Validación y QR</h3>
+              <p>Tras la aprobación, recibirás un <strong>código QR</strong> en tu correo para presentarlo al llegar.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="cta-row">
+          <a href="/solicitud-cita" class="btn btn-primary">Solicitar Cita Ahora</a>
+        </div>
+      </section>
+
+      <section class="map-section reveal">
+        <h2>Ubicación del Campus</h2>
+        <div class="map-card">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.5!2d-99.9975!3d20.3835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d3440435d0d899%3A0x5c34f3a92a1d37e7!2sUniversidad+Tecnol%C3%B3gica+de+San+Juan+del+R%C3%ADo!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx"
+            width="100%"
+            height="400"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <div class="map-address">
+            <i class="fas fa-map-marker-alt"></i>
+            Av. La Palma No. 125, Col. Vista Hermosa, San Juan del Río, Qro. C.P. 76826
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <ChatWidget />
+  <Footer />
+</Layout>
+
+<style>
+  .instructions-section {
+    padding: 50px 0 30px;
+  }
+
+  .instructions-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .instructions-header h1 {
+    margin-bottom: 10px;
+  }
+
+  .instructions-header p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Steps Grid ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .step-card {
+    background: var(--color-card, #fff);
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: var(--radius-md);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    transition: var(--transition);
+    animation-delay: var(--delay, 0s);
+  }
+
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-accent-light);
+  }
+
+  .step-number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gradient-button);
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-accent);
+  }
+
+  .step-icon-fa {
+    font-size: 2.2rem;
+    color: var(--color-accent, #00A688);
+    margin-bottom: 4px;
+  }
+
+  .step-card:hover .step-icon-fa {
+    transform: scale(1.15);
+    transition: transform 0.3s ease;
+  }
+
+  .step-content h3 {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    -webkit-text-fill-color: var(--color-primary);
+    background: none;
+  }
+
+  .step-content p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .step-content strong {
+    color: var(--color-accent);
+  }
+
+  [data-theme="dark"] .step-content strong {
+    color: var(--color-accent-light);
+  }
+
+  [data-theme="dark"] .step-content h3 {
+    color: var(--color-text);
+    -webkit-text-fill-color: var(--color-text);
+  }
+
+  /* ── CTA ── */
+  .cta-row {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* ── Map Section ── */
+  .map-section {
+    padding: 0 0 40px;
+  }
+
+  .map-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .map-card {
+    width: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border, #eee);
+  }
+
+  .map-address {
+    text-align: center;
+    padding: 14px 20px;
+    background: var(--color-bg-warm, #FAFBFD);
+    color: var(--color-text-light, #718096);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--color-border, #eee);
+  }
+
+  .map-address i {
+    color: var(--color-accent, #00A688);
+    margin-right: 6px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

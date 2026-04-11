@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Banner from '../components/Banner.astro';
-import RegisterForm from '../components/RegisterForm.astro';
-import ImageCarousel from '../components/ImageCarousel.astro';
 import ChatWidget from '../components/ChatWidget.astro';
 import Footer from '../components/Footer.astro';
 ---
@@ -14,13 +12,13 @@ import Footer from '../components/Footer.astro';
   <main>
     <Banner />
 
-    <section class="welcome-container">
+    <section class="welcome-container reveal">
       <h1 class="welcome-title">Bienvenid@ al Centro de Acceso <strong>UTSJR</strong></h1>
 
       <div class="cards-wrapper">
-        <a href="#registro" class="welcome-card">
+        <a href="/solicitud-cita" class="welcome-card">
           <div class="icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
               <circle cx="12" cy="14" r="3"></circle>
@@ -32,16 +30,16 @@ import Footer from '../components/Footer.astro';
 
         <div class="vertical-divider"></div>
 
-        <a href="#ayuda" class="welcome-card">
+        <a href="/consultar-visita" class="welcome-card">
           <div class="icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.2">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="9" y1="9" x2="15" y2="9"></line>
-              <line x1="9" y1="13" x2="15" y2="13"></line>
-              <line x1="9" y1="17" x2="11" y2="17"></line>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
             </svg>
           </div>
-          <span class="card-label">Continuar al<br/><strong>Sitio / Ayuda</strong></span>
+          <span class="card-label">Consultar<br/><strong>Visita</strong></span>
         </a>
       </div>
 
@@ -49,59 +47,6 @@ import Footer from '../components/Footer.astro';
         El Servicio de Administración Universitaria gestiona con piso parejo, vocación humana y conciencia social para la transformación de la UTSJR.
       </p>
     </section>
-
-    <section id="registro">
-      <RegisterForm />
-    </section>
-
-    <div class="container">
-      <div class="help-section-layout" id="ayuda">
-
-        <!-- TEXTO A LA IZQUIERDA -->
-        <div class="instructions-text fade-in-text">
-          <h2>Instrucciones de Acceso</h2>
-          <p>Siga estos pasos para validar su solicitud de cita al campus:</p>
-
-          <br />
-
-          <article class="step">
-            <h3>1. Solicitud de Cita / Acceso</h3>
-            <p>Completa tus datos personales, selecciona la <strong>fecha de tu cita</strong> y el <strong>motivo de tu visita</strong>.</p>
-          </article>
-
-          <br />
-
-          <article class="step">
-            <h3>2. Documentación</h3>
-            <p>Es obligatorio <strong>subir tu identificación oficial</strong> (PDF o imagen) para validar tu identidad.</p>
-          </article>
-
-          <br />
-
-          <article class="step">
-            <h3>3. Validación y QR</h3>
-            <p>Tras la aprobación, recibirás un <strong>código QR</strong> en tu correo para presentarlo al llegar.</p>
-          </article>
-        </div>
-
-        <!-- MAPA CENTRADO A LA DERECHA -->
-        <div class="map-half-side">
-          <div class="map-card">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.137357068225!2d-100.0152436239121!3d20.31513931215162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d30b6664988775%3A0x6b40285a81e9f168!2sUT%20San%20Juan%20del%20R%C3%ADo!5e0!3m2!1ses-419!2smx!4v1707750000000!5m2!1ses-419!2smx"
-              width="100%"
-              height="350"
-              style="border:0;"
-              allowfullscreen=""
-              loading="lazy">
-            </iframe>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <ImageCarousel />
   </main>
 
   <ChatWidget />
@@ -109,12 +54,6 @@ import Footer from '../components/Footer.astro';
 </Layout>
 
 <style>
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
   /* BIENVENIDA */
   .welcome-container {
     text-align: center;
@@ -125,12 +64,20 @@ import Footer from '../components/Footer.astro';
 
   .welcome-title {
     font-size: 2.2rem;
-    color: #444;
+    color: var(--color-text, #2D3748);
     margin-bottom: 40px;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    -webkit-text-fill-color: var(--color-text, #2D3748);
+    background: none;
   }
 
   .welcome-title strong {
-    color: #00b049;
+    color: var(--color-accent, #00A688);
+    -webkit-text-fill-color: var(--color-accent, #00A688);
+  }
+
+  [data-theme="dark"] .welcome-title {
+    color: var(--text-color);
   }
 
   .cards-wrapper {
@@ -148,28 +95,29 @@ import Footer from '../components/Footer.astro';
     align-items: center;
     justify-content: center;
     padding: 25px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    border: 1px solid var(--divider, #ccc);
+    border-radius: var(--radius-md, 12px);
     width: 200px;
     height: 210px;
+    background: var(--card-bg, #fff);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
     cursor: pointer;
   }
 
   .welcome-card:hover {
     transform: translateY(-6px) scale(1.03);
-    border-color: #007bff;
-    box-shadow: 0 12px 28px rgba(0, 123, 255, 0.15);
-    background: #f0f6ff;
+    border-color: var(--color-accent);
+    box-shadow: 0 12px 28px rgba(0, 166, 136, 0.18);
+    background: var(--color-accent-glow, rgba(0, 166, 136, 0.04));
   }
 
   .welcome-card:hover .icon-box svg {
-    stroke: #007bff;
+    color: var(--utsjr-green) !important;
     transform: scale(1.2) rotate(-5deg);
   }
 
   .welcome-card:hover .card-label {
-    color: #007bff;
+    color: var(--utsjr-green);
   }
 
   .icon-box {
@@ -181,12 +129,13 @@ import Footer from '../components/Footer.astro';
   .icon-box svg {
     width: 100%;
     height: 100%;
-    transition: transform 0.3s ease, stroke 0.3s ease;
+    color: var(--text-muted, #666);
+    transition: transform 0.3s ease, color 0.3s ease;
   }
 
   .card-label {
     transition: color 0.25s ease;
-    color: #444;
+    color: var(--text-color, #444);
     text-align: center;
     font-size: 0.95rem;
   }
@@ -194,60 +143,20 @@ import Footer from '../components/Footer.astro';
   .vertical-divider {
     width: 2px;
     height: 100px;
-    background: #007bff;
+    background: var(--gradient-separator, linear-gradient(to bottom, #003057, #00A688));
     opacity: 0.6;
+    border-radius: 2px;
   }
 
-  /* LAYOUT TEXTO IZQUIERDA + MAPA DERECHA */
-  .help-section-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
-    margin: 60px 0;
-  }
-
-  .instructions-text {
-    flex: 1;
-  }
-
-  .instructions-text h2 {
-    color: #002d55;
-    margin-bottom: 15px;
-  }
-
-  .step h3 {
-    color: #007bff;
-    margin-bottom: 5px;
-  }
-
-  /* MAPA EN MITAD DERECHA */
-  .map-half-side {
-    flex: 0 0 450px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .map-card {
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    border: 1px solid #eee;
+  .welcome-footer {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+    line-height: 1.7;
   }
 
   /* RESPONSIVO */
   @media (max-width: 900px) {
-    .help-section-layout {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .map-half-side {
-      flex: 1;
-      max-width: 100%;
-    }
-
     .cards-wrapper {
       flex-direction: column;
     }
@@ -256,33 +165,4 @@ import Footer from '../components/Footer.astro';
       display: none;
     }
   }
-
-  /* ── Fade-in al hacer scroll ── */
-  .fade-in-text {
-    opacity: 0;
-    transition: opacity 0.9s ease;
-  }
-
-  .fade-in-text.is-visible {
-    opacity: 1;
-  }
 </style>
-
-<script>
-  function initFadeIn() {
-    const el = document.querySelector('.fade-in-text');
-    if (!el) return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    }, { threshold: 0.15 });
-
-    observer.observe(el);
-  }
-
-  document.addEventListener('DOMContentLoaded', initFadeIn);
-  document.addEventListener('astro:page-load', initFadeIn);
-</script>

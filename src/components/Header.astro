@@ -1,5 +1,7 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="ut-header">
@@ -18,7 +20,6 @@ import ThemeToggle from './ThemeToggle.astro';
 
   <nav class="main-nav">
     <div class="container nav-container">
-      <!-- Hamburger toggle (solo móvil) -->
       <button class="hamburger" id="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -26,10 +27,11 @@ import ThemeToggle from './ThemeToggle.astro';
       </button>
 
       <ul class="nav-links" id="nav-links">
-        <li class="active"><a href="/">Inicio</a></li>
-        <li><a href="#servicios">Servicios de Acceso</a></li>
-        <li><a href="#citas">Citas</a></li>
-        <li><a href="#directorio">Directorio</a></li>
+        <li class={currentPath === '/' ? 'active' : ''}><a href="/">Inicio</a></li>
+        <li class={currentPath === '/solicitud-cita' || currentPath === '/solicitud-cita/' ? 'active' : ''}><a href="/solicitud-cita">Solicitud de Cita</a></li>
+        <li class={currentPath === '/consultar-visita' || currentPath === '/consultar-visita/' ? 'active' : ''}><a href="/consultar-visita">Consultar Visita</a></li>
+        <li class={currentPath === '/instrucciones' || currentPath === '/instrucciones/' ? 'active' : ''}><a href="/instrucciones">Instrucciones de Acceso</a></li>
+        <li class={currentPath === '/directorio' || currentPath === '/directorio/' ? 'active' : ''}><a href="/directorio">Directorio</a></li>
       </ul>
       
       <div class="nav-actions">
@@ -40,28 +42,21 @@ import ThemeToggle from './ThemeToggle.astro';
 </header>
 
 <style>
-  :root {
-    --utsjr-green: #00b049;
-    --utsjr-dark-green: #008f3b;
-    --header-height-top: 50px;
-    --header-height-main: 48px;
-  }
-
   .ut-header {
     width: 100%;
     position: sticky;
-    top: 0;
+    top: 4px; /* espacio para la línea institucional */
     z-index: 9999;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-    font-family: 'Montserrat', sans-serif, system-ui;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
   }
 
   /* ── BARRA SUPERIOR ── */
   .top-bar {
-    background: var(--card-bg, #ffffff);
+    background: var(--color-card, #ffffff);
     padding: 10px 0;
-    border-bottom: 1px solid var(--divider, #e2e8f0);
+    border-bottom: 1px solid var(--color-border, #e2e8f0);
     transition: background-color 0.3s;
+    box-shadow: var(--shadow-sm);
   }
 
   .top-content {
@@ -88,13 +83,20 @@ import ThemeToggle from './ThemeToggle.astro';
   .separator {
     width: 1px;
     height: 24px;
-    background: var(--divider, #cccccc);
+    background: var(--color-border, #cccccc);
   }
 
   .uni-name {
     font-size: 1.05rem;
-    color: var(--text-color, #333333);
+    color: var(--color-text, #333333);
     letter-spacing: -0.3px;
+    font-weight: 400;
+  }
+
+  .uni-name strong {
+    color: var(--color-primary, #0F4C75);
+    font-weight: 700;
+    -webkit-text-fill-color: var(--color-primary, #0F4C75);
   }
 
   .top-links {
@@ -104,21 +106,22 @@ import ThemeToggle from './ThemeToggle.astro';
 
   .top-links a {
     font-size: 13px;
-    color: var(--text-muted, #6b7c93);
+    color: var(--color-text-muted, #A0AEC0);
     text-decoration: none;
     transition: color 0.25s;
     font-weight: 500;
   }
 
   .top-links a:hover {
-    color: var(--utsjr-green);
+    color: var(--color-accent, #00A688);
   }
 
-  /* ── BARRA PRINCIPAL (VERDE) ── */
+  /* ── BARRA PRINCIPAL (Gradiente institucional) ── */
   .main-nav {
-    background: linear-gradient(135deg, var(--utsjr-green) 0%, var(--utsjr-dark-green) 100%);
-    height: var(--header-height-main);
+    background: linear-gradient(135deg, var(--color-accent, #00A688) 0%, var(--color-accent-dark, #008A70) 100%);
+    height: 50px;
     position: relative;
+    box-shadow: 0 4px 20px rgba(0, 166, 136, 0.2);
   }
 
   .nav-container {
@@ -187,7 +190,7 @@ import ThemeToggle from './ThemeToggle.astro';
     align-items: center;
   }
 
-  /* ── HAMBURGER (oculto en escritorio) ── */
+  /* ── HAMBURGER ── */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -220,13 +223,9 @@ import ThemeToggle from './ThemeToggle.astro';
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .top-links {
-      display: none;
-    }
+    .top-links { display: none; }
 
-    .hamburger {
-      display: flex;
-    }
+    .hamburger { display: flex; }
 
     .nav-links {
       position: absolute;
@@ -235,25 +234,21 @@ import ThemeToggle from './ThemeToggle.astro';
       right: 0;
       flex-direction: column;
       height: auto;
-      background: linear-gradient(180deg, var(--utsjr-dark-green), #006b2d);
+      background: linear-gradient(180deg, var(--color-accent-dark, #008A70), #006B57);
       box-shadow: 0 8px 24px rgba(0,0,0,0.15);
       overflow: hidden;
       max-height: 0;
       transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .nav-links.open {
-      max-height: 300px;
-    }
+    .nav-links.open { max-height: 300px; }
 
     .nav-links li {
       padding: 0;
       height: auto;
     }
 
-    .nav-links li::after {
-      display: none;
-    }
+    .nav-links li::after { display: none; }
 
     .nav-links a {
       display: block;
@@ -264,10 +259,6 @@ import ThemeToggle from './ThemeToggle.astro';
 
     .nav-links li:hover {
       background: rgba(255,255,255,0.08);
-    }
-
-    .top-content, .nav-container {
-      justify-content: space-between;
     }
   }
 </style>
@@ -284,7 +275,6 @@ import ThemeToggle from './ThemeToggle.astro';
       btn.setAttribute('aria-expanded', String(!expanded));
     });
 
-    // Cerrar menú al hacer click en un enlace
     navLinks?.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         btn?.classList.remove('open');

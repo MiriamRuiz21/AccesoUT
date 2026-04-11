@@ -41,7 +41,7 @@
   .switch-track {
     width: 52px;
     height: 28px;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    background: linear-gradient(135deg, var(--color-navy-deep, #0D1B2A), var(--color-navy, #1B2A4A));
     border-radius: 20px;
     position: relative;
     padding: 3px;
@@ -52,7 +52,7 @@
   .switch-handle {
     width: 22px;
     height: 22px;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(135deg, var(--color-accent, #00A688), var(--color-accent-light, #00C9A4));
     border-radius: 50%;
     position: absolute;
     left: 3px;
@@ -61,16 +61,17 @@
     justify-content: center;
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
                 background 0.3s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 8px rgba(0,166,136,0.2);
   }
 
   :global([data-theme="dark"]) .switch-track {
-    background: linear-gradient(135deg, #0f172a, #1e293b);
+    background: linear-gradient(135deg, #0B1120, #162032);
   }
 
   :global([data-theme="dark"]) .switch-handle {
     transform: translateX(24px);
-    background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+    background: linear-gradient(135deg, #94A3B8, #64748B);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
   }
 
   .sun-icon, .moon-icon {

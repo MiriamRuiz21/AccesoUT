@@ -137,7 +137,7 @@
 
   .carousel-caption p {
     color: white;
-    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
     font-size: clamp(1rem, 2.5vw, 1.3rem);
     font-weight: 700;
     margin: 0;
@@ -172,8 +172,8 @@
   }
 
   .carousel-btn:hover {
-    background: rgba(0,176,73,0.6);
-    border-color: rgba(0,176,73,0.8);
+    background: rgba(0,166,136,0.6);
+    border-color: rgba(0,166,136,0.8);
     transform: translateY(-50%) scale(1.08);
   }
 
@@ -241,7 +241,7 @@
 
   .carousel-progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, var(--utsjr-green, #00b049), #00d458);
+    background: linear-gradient(90deg, var(--color-accent, #00A688), var(--color-accent-light, #00C9A4));
     width: 0%;
     border-radius: 0 3px 3px 0;
   }
