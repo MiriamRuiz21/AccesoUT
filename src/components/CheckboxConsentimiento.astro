@@ -1,0 +1,35 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  documentTitle: string;
+  modalTarget: string;
+}
+
+const { id, label, documentTitle, modalTarget } = Astro.props;
+---
+
+<div class="consent-block" id={`${id}-block`}>
+  <label class="consent-label" for={id}>
+    <input
+      type="checkbox"
+      id={id}
+      class="consent-checkbox-input"
+      aria-label={label}
+    />
+    <span class="consent-checkbox-custom" role="presentation">
+      <svg class="checkmark-icon" viewBox="0 0 12 10" fill="none">
+        <path d="M1 5.5L4 8.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <span class="consent-text">{label}</span>
+  </label>
+  <button
+    type="button"
+    class="btn-ver-documento"
+    data-open-modal={modalTarget}
+    aria-label={`Ver ${documentTitle}`}
+  >
+    <i class="fas fa-file-alt"></i> Ver documento
+  </button>
+</div>

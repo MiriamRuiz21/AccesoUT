@@ -12,12 +12,100 @@ import Footer from '../components/Footer.astro';
   <main>
     <Banner />
 
+    <!-- ═══════════════════════════════════════════════════════
+         MODAL DE CONSENTIMIENTO — aparece al cargar la página
+         ═══════════════════════════════════════════════════════ -->
+    <div class="consent-overlay" id="consent-overlay">
+      <div class="consent-panel">
+        <div class="consent-panel-header">
+          <i class="fas fa-shield-alt"></i>
+          <div>
+            <h3>Protección de Datos Personales</h3>
+            <p>Conforme a la LFPDPPP, debes aceptar los siguientes documentos antes de continuar.</p>
+          </div>
+        </div>
+
+        <div class="consent-panel-body">
+          <!-- Checkbox 1: Política de Privacidad -->
+          <div class="consent-item" id="item-privacidad">
+            <label class="consent-check-label">
+              <input type="checkbox" id="chk-privacidad" class="consent-chk" />
+              <span class="custom-check"><svg viewBox="0 0 12 10" fill="none"><path d="M1 5.5L4 8.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span>He leído y acepto la <strong>Política de Privacidad</strong> de UTSJR</span>
+            </label>
+            <button type="button" class="btn-ver-doc" data-pdf="/Documentos/Politica_de_Privacidad.pdf" data-doc-title="Política de Privacidad">
+              <i class="fas fa-file-pdf"></i> Ver documento
+            </button>
+          </div>
+
+          <!-- Checkbox 2: LFPDPPP -->
+          <div class="consent-item" id="item-lfpdppp">
+            <label class="consent-check-label">
+              <input type="checkbox" id="chk-lfpdppp" class="consent-chk" />
+              <span class="custom-check"><svg viewBox="0 0 12 10" fill="none"><path d="M1 5.5L4 8.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span>Autorizo el procesamiento de mis datos conforme a la <strong>LFPDPPP</strong></span>
+            </label>
+            <button type="button" class="btn-ver-doc" data-pdf="/Documentos/Proteccion_de_Datos_Personales.pdf" data-doc-title="Protección de Datos Personales (LFPDPPP)">
+              <i class="fas fa-file-pdf"></i> Ver documento
+            </button>
+          </div>
+
+          <!-- Checkbox 3: Términos y Condiciones -->
+          <div class="consent-item" id="item-terminos">
+            <label class="consent-check-label">
+              <input type="checkbox" id="chk-terminos" class="consent-chk" />
+              <span class="custom-check"><svg viewBox="0 0 12 10" fill="none"><path d="M1 5.5L4 8.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span>Acepto los <strong>Términos y Condiciones</strong> del Sistema de Acceso UTSJR</span>
+            </label>
+            <button type="button" class="btn-ver-doc" data-pdf="/Documentos/Terminos_y_Condiciones.pdf" data-doc-title="Términos y Condiciones">
+              <i class="fas fa-file-pdf"></i> Ver documento
+            </button>
+          </div>
+        </div>
+
+        <div class="consent-panel-footer">
+          <div class="consent-counter" id="consent-counter">
+            <i class="fas fa-info-circle"></i> Faltan 3 documento(s) por aceptar.
+          </div>
+          <button type="button" class="btn-aceptar-todo" id="btn-continuar" disabled>
+            <i class="fas fa-check-circle"></i> Continuar al formulario
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         MODAL VISOR DE PDF — se abre al dar clic en "Ver documento"
+         ═══════════════════════════════════════════════════════ -->
+    <div class="pdf-viewer-overlay" id="pdf-viewer-overlay">
+      <div class="pdf-viewer-modal">
+        <div class="pdf-viewer-header">
+          <h4 id="pdf-viewer-title"><i class="fas fa-file-pdf"></i> Documento</h4>
+          <button type="button" class="pdf-viewer-close-x" id="pdf-close-x" aria-label="Cerrar">&times;</button>
+        </div>
+        <div class="pdf-viewer-body">
+          <iframe id="pdf-viewer-iframe" src="" title="Visor de documento PDF"></iframe>
+        </div>
+        <div class="pdf-viewer-footer">
+          <button type="button" class="pdf-btn-cerrar" id="pdf-btn-cerrar">
+            <i class="fas fa-times"></i> Cerrar
+          </button>
+          <button type="button" class="pdf-btn-aceptar" id="pdf-btn-aceptar">
+            <i class="fas fa-check"></i> Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         FORMULARIO DE SOLICITUD (existente)
+         ═══════════════════════════════════════════════════════ -->
     <section class="form-container container reveal">
       <div class="card-grid">
         <div class="form-side">
           <h2>Solicitud de Cita / Acceso</h2>
           <p>Completa tus datos para agendar tu visita al campus.</p>
-          
+
           <form id="appointment-form">
             <p class="section-label"><i class="fas fa-user"></i> Datos Personales</p>
 
@@ -111,17 +199,509 @@ import Footer from '../components/Footer.astro';
   <Footer />
 </Layout>
 
+<!-- ═══════════════════════════════════════════════════════
+     ESTILOS (todo inline, sin depender de global.css)
+     ═══════════════════════════════════════════════════════ -->
+<style is:global>
+  /* ── OVERLAY CONSENTIMIENTO ── */
+  .consent-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 17, 32, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 80000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: consentFadeIn 0.4s ease-out;
+  }
+
+  .consent-overlay.hidden {
+    display: none;
+  }
+
+  @keyframes consentFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── PANEL PRINCIPAL ── */
+  .consent-panel {
+    background: var(--color-card, #ffffff);
+    border-radius: 16px;
+    max-width: 580px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-border, #e2e8f0);
+    animation: consentSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow: hidden;
+  }
+
+  @keyframes consentSlideUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ── HEADER ── */
+  .consent-panel-header {
+    background: linear-gradient(135deg, #0D1B2A, #0F4C75);
+    padding: 24px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    color: white;
+  }
+
+  .consent-panel-header i {
+    font-size: 1.6rem;
+    margin-top: 2px;
+    color: #00C9A4;
+  }
+
+  .consent-panel-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: white;
+    -webkit-text-fill-color: white;
+    background: none;
+  }
+
+  .consent-panel-header p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── BODY ── */
+  .consent-panel-body {
+    padding: 24px 28px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ── CADA ITEM DE CONSENTIMIENTO ── */
+  .consent-item {
+    background: var(--color-bg-warm, #FAFBFD);
+    border: 1.5px solid var(--color-border, #e2e8f0);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .consent-item:hover {
+    border-color: #00A688;
+    box-shadow: 0 2px 12px rgba(0, 166, 136, 0.1);
+  }
+
+  .consent-item.accepted {
+    border-color: #00A688;
+    background: rgba(0, 166, 136, 0.06);
+  }
+
+  [data-theme="dark"] .consent-item {
+    background: var(--input-bg, #1A2740);
+  }
+
+  [data-theme="dark"] .consent-item.accepted {
+    background: rgba(0, 166, 136, 0.1);
+  }
+
+  /* ── CHECKBOX CUSTOM ── */
+  .consent-check-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--color-text, #2D3748);
+    line-height: 1.5;
+  }
+
+  .consent-chk {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    border: 0 !important;
+    background: none !important;
+  }
+
+  .custom-check {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border: 2px solid var(--color-border, #e2e8f0);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    margin-top: 1px;
+    background: var(--color-card, #fff);
+  }
+
+  .custom-check svg {
+    width: 12px;
+    height: 12px;
+    color: white;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease;
+  }
+
+  .consent-check-label:hover .custom-check {
+    border-color: #00A688;
+    transform: scale(1.08);
+    box-shadow: 0 2px 8px rgba(0, 166, 136, 0.15);
+  }
+
+  .consent-chk:checked + .custom-check {
+    background: #00A688;
+    border-color: #00A688;
+    box-shadow: 0 2px 10px rgba(0, 166, 136, 0.35);
+  }
+
+  .consent-chk:checked + .custom-check svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .consent-chk:focus-visible + .custom-check {
+    outline: 2px solid #00A688;
+    outline-offset: 2px;
+  }
+
+  .consent-check-label strong {
+    color: #00A688;
+    font-weight: 600;
+  }
+
+  /* ── BOTÓN VER DOCUMENTO ── */
+  .btn-ver-doc {
+    background: none;
+    border: 1.5px solid var(--color-border, #e2e8f0);
+    color: #00A688;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+    margin-left: 34px;
+  }
+
+  .btn-ver-doc:hover {
+    background: rgba(0, 166, 136, 0.08);
+    border-color: #00A688;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 166, 136, 0.12);
+  }
+
+  .btn-ver-doc i {
+    font-size: 0.75rem;
+  }
+
+  /* ── FOOTER DEL PANEL ── */
+  .consent-panel-footer {
+    padding: 18px 28px;
+    border-top: 1px solid var(--color-border, #e2e8f0);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--color-bg-warm, #FAFBFD);
+  }
+
+  [data-theme="dark"] .consent-panel-footer {
+    background: var(--input-bg, #1A2740);
+  }
+
+  .consent-counter {
+    font-size: 0.82rem;
+    color: var(--color-text-light, #718096);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .consent-counter i {
+    color: #00A688;
+  }
+
+  .consent-counter.done {
+    color: #00A688;
+    font-weight: 600;
+  }
+
+  .btn-aceptar-todo {
+    width: 100%;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #00A688, #00C9A4);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 166, 136, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-aceptar-todo:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 166, 136, 0.45);
+  }
+
+  .btn-aceptar-todo:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none;
+  }
+
+  /* ── MODAL VISOR DE PDF ── */
+  .pdf-viewer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 17, 32, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 90000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    animation: consentFadeIn 0.3s ease-out;
+  }
+
+  .pdf-viewer-overlay.activo {
+    display: flex;
+  }
+
+  .pdf-viewer-modal {
+    background: var(--color-card, #ffffff);
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-border, #e2e8f0);
+    animation: consentSlideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow: hidden;
+  }
+
+  .pdf-viewer-header {
+    background: linear-gradient(135deg, #0D1B2A, #0F4C75);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .pdf-viewer-header h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+    -webkit-text-fill-color: white;
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pdf-viewer-header h4 i {
+    color: #00C9A4;
+    font-size: 1.1rem;
+  }
+
+  .pdf-viewer-close-x {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  .pdf-viewer-close-x:hover {
+    color: white;
+  }
+
+  .pdf-viewer-body {
+    flex: 1;
+    overflow: hidden;
+    background: #525659;
+  }
+
+  .pdf-viewer-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .pdf-viewer-footer {
+    padding: 14px 24px;
+    border-top: 1px solid var(--color-border, #e2e8f0);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background: var(--color-bg-warm, #FAFBFD);
+    flex-shrink: 0;
+  }
+
+  [data-theme="dark"] .pdf-viewer-footer {
+    background: var(--input-bg, #1A2740);
+  }
+
+  .pdf-btn-cerrar {
+    padding: 10px 24px;
+    border: 1.5px solid var(--color-border, #e2e8f0);
+    border-radius: 8px;
+    background: none;
+    color: var(--color-text, #2D3748);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+  }
+
+  .pdf-btn-cerrar:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: #999;
+  }
+
+  [data-theme="dark"] .pdf-btn-cerrar:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .pdf-btn-aceptar {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #00A688, #00C9A4);
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 166, 136, 0.3);
+  }
+
+  .pdf-btn-aceptar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0, 166, 136, 0.45);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 576px) {
+    .consent-panel {
+      max-height: 95vh;
+      border-radius: 12px;
+    }
+
+    .consent-panel-header {
+      padding: 18px 20px;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .consent-panel-body {
+      padding: 18px 20px;
+    }
+
+    .consent-panel-footer {
+      padding: 14px 20px;
+    }
+
+    .consent-item {
+      padding: 14px;
+    }
+
+    .btn-ver-doc {
+      margin-left: 0;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .pdf-viewer-modal {
+      height: 90vh;
+      border-radius: 12px;
+    }
+
+    .pdf-viewer-header {
+      padding: 14px 18px;
+    }
+
+    .pdf-viewer-footer {
+      padding: 12px 18px;
+      flex-direction: column;
+    }
+
+    .pdf-btn-cerrar,
+    .pdf-btn-aceptar {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
 <style>
   .form-container {
     padding: 3rem 0;
   }
 
-  .card-grid { 
-    display: grid; 
-    grid-template-columns: 1.5fr 1fr; 
-    gap: 30px; 
-    background: var(--card-bg, white); 
-    padding: 40px; 
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    background: var(--card-bg, white);
+    padding: 40px;
     border-radius: var(--radius-lg, 16px);
     box-shadow: var(--shadow-md);
     border: 1px solid var(--color-border, #eee);
@@ -197,12 +777,12 @@ import Footer from '../components/Footer.astro';
     transform: none;
   }
 
-  .qr-side { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    border-left: 2px dashed var(--divider, #eee); 
+  .qr-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-left: 2px dashed var(--divider, #eee);
     text-align: center;
     padding: 20px;
   }
@@ -346,6 +926,96 @@ import Footer from '../components/Footer.astro';
   }
 </style>
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var overlay = document.getElementById('consent-overlay');
+    var btnContinuar = document.getElementById('btn-continuar');
+    var counter = document.getElementById('consent-counter');
+    var checkboxes = document.querySelectorAll('.consent-chk');
+    var items = {
+      'chk-privacidad': document.getElementById('item-privacidad'),
+      'chk-lfpdppp': document.getElementById('item-lfpdppp'),
+      'chk-terminos': document.getElementById('item-terminos')
+    };
+
+    function updateConsent() {
+      var total = checkboxes.length;
+      var checked = 0;
+      checkboxes.forEach(function(cb) {
+        var item = items[cb.id];
+        if (cb.checked) {
+          checked++;
+          if (item) item.classList.add('accepted');
+        } else {
+          if (item) item.classList.remove('accepted');
+        }
+      });
+
+      var pending = total - checked;
+      if (pending === 0) {
+        counter.className = 'consent-counter done';
+        counter.innerHTML = '<i class="fas fa-check-circle"></i> Todos los documentos aceptados.';
+        btnContinuar.disabled = false;
+      } else {
+        counter.className = 'consent-counter';
+        counter.innerHTML = '<i class="fas fa-info-circle"></i> Faltan ' + pending + ' documento(s) por aceptar.';
+        btnContinuar.disabled = true;
+      }
+    }
+
+    checkboxes.forEach(function(cb) {
+      cb.addEventListener('change', updateConsent);
+    });
+
+    btnContinuar.addEventListener('click', function() {
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+
+    document.body.style.overflow = 'hidden';
+
+    // ── VISOR DE PDF EN MODAL ──
+    var pdfOverlay = document.getElementById('pdf-viewer-overlay');
+    var pdfIframe = document.getElementById('pdf-viewer-iframe');
+    var pdfTitle = document.getElementById('pdf-viewer-title');
+    var pdfBtnCerrar = document.getElementById('pdf-btn-cerrar');
+    var pdfBtnAceptar = document.getElementById('pdf-btn-aceptar');
+    var pdfCloseX = document.getElementById('pdf-close-x');
+
+    function abrirPdf(pdfSrc, titulo) {
+      if (!pdfOverlay || !pdfIframe || !pdfTitle) return;
+      pdfTitle.innerHTML = '<i class="fas fa-file-pdf"></i> ' + titulo;
+      pdfIframe.src = pdfSrc + '#toolbar=0&navpanes=0';
+      pdfOverlay.classList.add('activo');
+    }
+
+    function cerrarPdf() {
+      if (!pdfOverlay || !pdfIframe) return;
+      pdfOverlay.classList.remove('activo');
+      pdfIframe.src = '';
+    }
+
+    document.querySelectorAll('.btn-ver-doc').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var pdf = btn.getAttribute('data-pdf');
+        var titulo = btn.getAttribute('data-doc-title') || 'Documento';
+        if (pdf) abrirPdf(pdf, titulo);
+      });
+    });
+
+    if (pdfBtnCerrar) pdfBtnCerrar.addEventListener('click', cerrarPdf);
+    if (pdfBtnAceptar) pdfBtnAceptar.addEventListener('click', cerrarPdf);
+    if (pdfCloseX) pdfCloseX.addEventListener('click', cerrarPdf);
+
+    if (pdfOverlay) {
+      pdfOverlay.addEventListener('click', function(e) {
+        if (e.target === pdfOverlay) cerrarPdf();
+      });
+    }
+  });
+</script>
+
 <script>
   import { endpoints } from '../config/api.js';
 
@@ -442,7 +1112,11 @@ import Footer from '../components/Footer.astro';
       const nombre = formData.get('nombre') as string;
       const apellido = formData.get('apellido_paterno') as string;
       const fecha = formData.get('fecha') as string;
-      const motivo = formData.get('motivo') as string;
+
+      formData.append('consentimiento_privacidad', 'true');
+      formData.append('consentimiento_lfpdppp', 'true');
+      formData.append('consentimiento_terminos', 'true');
+      formData.append('consent_timestamp', new Date().toISOString());
 
       try {
         const res = await fetch(endpoints.register, {

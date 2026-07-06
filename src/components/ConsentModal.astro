@@ -1,0 +1,130 @@
+---
+interface Props {
+  modalId: string;
+  title: string;
+  documentId: 'privacy' | 'lfpdppp' | 'termsConditions';
+}
+
+const { modalId, title, documentId } = Astro.props;
+---
+
+<div class="consent-modal-overlay" id={modalId} role="dialog" aria-modal="true" aria-labelledby={`${modalId}-title`}>
+  <div class="consent-modal">
+    <div class="consent-modal-header">
+      <h3 id={`${modalId}-title`}>{title}</h3>
+      <button class="consent-modal-close" data-close-modal={modalId} aria-label="Cerrar modal">&times;</button>
+    </div>
+    <div class="consent-modal-body">
+      {documentId === 'privacy' && (
+        <div class="legal-content">
+          <h4>¿Qué información recopilamos?</h4>
+          <p>Nombre, apellidos, email, teléfono, fecha de cita, motivo de visita, identificación oficial (copia en PDF o imagen).</p>
+
+          <h4>¿Cómo usamos tu información?</h4>
+          <ul>
+            <li>Procesar tu solicitud de cita</li>
+            <li>Validar tu identidad</li>
+            <li>Generar código QR de acceso</li>
+            <li>Comunicaciones relacionadas con tu visita</li>
+          </ul>
+
+          <h4>Protección de tus datos</h4>
+          <p>Tus datos están protegidos con:</p>
+          <ul>
+            <li>Cifrado HTTPS</li>
+            <li>Almacenamiento seguro en Supabase</li>
+            <li>Acceso restringido al equipo autorizado</li>
+          </ul>
+
+          <h4>Tus derechos ARCO</h4>
+          <p>Tienes derecho a:</p>
+          <ul>
+            <li><strong>Acceso:</strong> Ver tus datos almacenados</li>
+            <li><strong>Rectificación:</strong> Corregir datos inexactos</li>
+            <li><strong>Cancelación:</strong> Solicitar eliminación</li>
+            <li><strong>Oposición:</strong> Rechazar ciertos usos</li>
+          </ul>
+          <p>Contacta a: <strong>privacidad@utsjr.edu.mx</strong></p>
+
+          <h4>Cambios en esta política</h4>
+          <p>Nos reservamos el derecho a actualizar esta política. Notificaremos cambios significativos por email.</p>
+        </div>
+      )}
+
+      {documentId === 'lfpdppp' && (
+        <div class="legal-content">
+          <h4>Consentimiento Informado</h4>
+          <p>Estás dando consentimiento explícito para que recopilemos y procesemos tus datos conforme a los términos de esta política y la Ley Federal de Protección de Datos Personales en Posesión de Particulares (LFPDPPP).</p>
+
+          <h4>Finalidad de la Recopilación</h4>
+          <p>Tus datos se recopilan ÚNICAMENTE para:</p>
+          <ul>
+            <li>Gestionar tu solicitud de cita al campus</li>
+            <li>Validar tu identidad</li>
+            <li>Generar tu código QR de acceso</li>
+            <li>Comunicaciones de seguimiento</li>
+          </ul>
+
+          <h4>Seguridad de Datos</h4>
+          <p>Implementamos:</p>
+          <ul>
+            <li>Cifrado en tránsito (HTTPS/TLS)</li>
+            <li>Cifrado en reposo (encriptación de DB)</li>
+            <li>Protocolos de autenticación JWT</li>
+            <li>Acceso restringido por roles</li>
+          </ul>
+
+          <h4>Derechos ARCO</h4>
+          <p>Puedes ejercer tus derechos contactando a: <strong>privacidad@utsjr.edu.mx</strong></p>
+          <p>Responderemos en máximo 20 días hábiles.</p>
+
+          <h4>Retención de Datos</h4>
+          <p>Tus datos se retienen mientras sean necesarios para la finalidad. Se eliminan automáticamente 90 días después de tu visita.</p>
+
+          <h4>Transferencia de Datos</h4>
+          <p>No transferimos tus datos a terceros sin consentimiento explícito.</p>
+
+          <h4>Notificación de Brechas</h4>
+          <p>En caso de incidente de seguridad, serás notificado en máximo 72 horas.</p>
+        </div>
+      )}
+
+      {documentId === 'termsConditions' && (
+        <div class="legal-content">
+          <h4>Objetivo del Sistema</h4>
+          <p>Este sistema facilita el registro y control de visitantes en el campus de la Universidad Tecnológica de San Juan del Río.</p>
+
+          <h4>Responsabilidades del Visitante</h4>
+          <ul>
+            <li>Proporcionar información veraz</li>
+            <li>No falsificar identificación</li>
+            <li>Respetar las normas del campus</li>
+            <li>No ingresar a áreas restringidas sin autorización</li>
+          </ul>
+
+          <h4>Prohibiciones</h4>
+          <ul>
+            <li>Transferir tu código QR a terceros</li>
+            <li>Usar datos ajenos para el registro</li>
+            <li>Acceder fuera del horario autorizado</li>
+            <li>Fotografiar áreas sensibles sin permiso</li>
+          </ul>
+
+          <h4>Limitación de Responsabilidad</h4>
+          <p>UTSJR no se responsabiliza por:</p>
+          <ul>
+            <li>Pérdida de datos por negligencia del usuario</li>
+            <li>Acceso no autorizado por credenciales compartidas</li>
+            <li>Daños derivados del mal uso del sistema</li>
+          </ul>
+
+          <h4>Modificaciones</h4>
+          <p>UTSJR se reserva el derecho de modificar estos términos en cualquier momento. Las modificaciones entrarán en vigor a partir de su publicación en este sistema.</p>
+
+          <h4>Vigencia</h4>
+          <p>Estos términos rigen desde la aceptación hasta que dejes de usar el sistema.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</div>

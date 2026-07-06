@@ -1,0 +1,629 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Banner from '../components/Banner.astro';
+import Footer from '../components/Footer.astro';
+import ChatWidget from '../components/ChatWidget.astro';
+import ConsentModal from '../components/ConsentModal.astro';
+import CheckboxConsentimiento from '../components/CheckboxConsentimiento.astro';
+import '../styles/global.css';
+---
+
+<Layout title="Registro de Datos Personales — UTSJR">
+  <Header />
+
+  <main>
+    <Banner />
+
+    <section class="registro-section container">
+      <div class="registro-header animate-fade-up">
+        <div class="badge-accent">
+          <span class="badge-dot"></span> Protección de Datos
+        </div>
+        <h1>Registro de visitante — Protección de datos</h1>
+        <p>Completa tus datos y acepta los documentos legales requeridos conforme a la LFPDPPP para continuar con tu solicitud de acceso.</p>
+      </div>
+
+      <div class="registro-grid animate-fade-up-delay-1">
+        <!-- COLUMNA IZQUIERDA: Formulario -->
+        <div class="registro-form-card">
+          <p class="section-label"><i class="fas fa-user"></i> Datos Personales</p>
+
+          <form id="formRegistro" novalidate>
+            <div class="form-row">
+              <div class="input-group">
+                <label for="reg-nombre">Nombre(s)</label>
+                <input type="text" id="reg-nombre" name="nombre" placeholder="Tu nombre" required />
+              </div>
+              <div class="input-group">
+                <label for="reg-apellidos">Apellidos</label>
+                <input type="text" id="reg-apellidos" name="apellidos" placeholder="Tus apellidos" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="input-group">
+                <label for="reg-email">Correo electrónico</label>
+                <input type="email" id="reg-email" name="email" placeholder="correo@ejemplo.com" required />
+              </div>
+              <div class="input-group">
+                <label for="reg-telefono">Teléfono (10 dígitos)</label>
+                <input type="tel" id="reg-telefono" name="telefono" placeholder="4271234567" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="input-group">
+                <label for="reg-fecha">Fecha de cita</label>
+                <input type="date" id="reg-fecha" name="fecha" required />
+              </div>
+              <div class="input-group">
+                <label for="reg-motivo">Motivo de visita</label>
+                <select id="reg-motivo" name="motivo" required>
+                  <option value="" disabled selected>Selecciona un motivo...</option>
+                  <option value="Trámite administrativo">Trámite administrativo</option>
+                  <option value="Visita a estudiante">Visita a estudiante</option>
+                  <option value="Reunión de trabajo">Reunión de trabajo</option>
+                  <option value="Entrega de documentos">Entrega de documentos</option>
+                  <option value="Evento institucional">Evento institucional</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="motivo-otro-container" class="input-group" style="display:none;">
+              <label for="reg-motivo-otro">Especifica el motivo</label>
+              <input type="text" id="reg-motivo-otro" name="motivo_otro" placeholder="Describe tu motivo de visita..." />
+            </div>
+
+            <!-- Mensaje de error del formulario -->
+            <div id="form-error" class="form-error-msg" role="alert" style="display:none;"></div>
+
+            <!-- Botón enviar (dentro del form pero visualmente abajo en móvil) -->
+            <button type="submit" class="btn-submit-registro" id="btnEnviar" disabled>
+              <i class="fas fa-paper-plane"></i> Enviar Registro
+            </button>
+          </form>
+        </div>
+
+        <!-- COLUMNA DERECHA: Consentimientos -->
+        <div class="registro-consent-card">
+          <p class="section-label"><i class="fas fa-shield-alt"></i> Consentimiento Legal</p>
+          <p class="consent-intro">Para continuar, debes leer y aceptar los siguientes documentos legales.</p>
+
+          <div class="consent-blocks">
+            <CheckboxConsentimiento
+              id="checkPrivacidad"
+              label="He leído y acepto la Política de Privacidad de UTSJR"
+              documentTitle="Política de Privacidad"
+              modalTarget="modal-privacy"
+            />
+
+            <CheckboxConsentimiento
+              id="checkLfpdppp"
+              label="Autorizo el procesamiento de mis datos personales conforme a la LFPDPPP"
+              documentTitle="Lineamientos de Protección de Datos"
+              modalTarget="modal-lfpdppp"
+            />
+
+            <CheckboxConsentimiento
+              id="checkTerminos"
+              label="Acepto los Términos y Condiciones de uso del Sistema de Acceso UTSJR"
+              documentTitle="Términos y Condiciones"
+              modalTarget="modal-terms"
+            />
+          </div>
+
+          <div class="consent-status" id="consent-status">
+            <i class="fas fa-info-circle"></i>
+            <span>Acepta los 3 documentos para habilitar el envío.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modales de documentos legales -->
+  <ConsentModal
+    modalId="modal-privacy"
+    title="Política de Privacidad — UTSJR"
+    documentId="privacy"
+  />
+
+  <ConsentModal
+    modalId="modal-lfpdppp"
+    title="Lineamientos de Protección de Datos Personales"
+    documentId="lfpdppp"
+  />
+
+  <ConsentModal
+    modalId="modal-terms"
+    title="Términos y Condiciones de Acceso"
+    documentId="termsConditions"
+  />
+
+  <ChatWidget />
+  <Footer />
+</Layout>
+
+<style>
+  /* ── SECCIÓN PRINCIPAL ── */
+  .registro-section {
+    padding: 3rem 0 2rem;
+  }
+
+  .registro-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .registro-header h1 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .registro-header > p {
+    max-width: 650px;
+    margin: 0 auto;
+    color: var(--color-text-light);
+    font-size: 1rem;
+  }
+
+  /* ── GRID 2 COLUMNAS ── */
+  .registro-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 30px;
+    align-items: start;
+  }
+
+  /* ── CARDS ── */
+  .registro-form-card,
+  .registro-consent-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .registro-form-card .section-label,
+  .registro-consent-card .section-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    letter-spacing: 0.06em;
+    margin: 0 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── FORM ── */
+  .form-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .form-row .input-group {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .input-group label {
+    margin-bottom: 6px;
+  }
+
+  /* ── ERROR MSG ── */
+  .form-error-msg {
+    background: rgba(252, 129, 129, 0.1);
+    border: 1px solid rgba(252, 129, 129, 0.3);
+    color: var(--color-danger);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── BOTÓN ENVIAR ── */
+  .btn-submit-registro {
+    width: 100%;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, #00A688 0%, #00C9A4 50%, #00A688 100%);
+    background-size: 200% 200%;
+    color: white;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 166, 136, 0.3);
+    position: relative;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .btn-submit-registro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .btn-submit-registro:not(:disabled):hover {
+    background-position: 100% 0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 166, 136, 0.45);
+  }
+
+  .btn-submit-registro:not(:disabled):hover::before {
+    left: 100%;
+  }
+
+  .btn-submit-registro:not(:disabled):active {
+    transform: translateY(0);
+  }
+
+  .btn-submit-registro:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none;
+  }
+
+  /* ── CONSENT CARD ── */
+  .consent-intro {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .consent-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .consent-status {
+    margin-top: 20px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(0, 166, 136, 0.06);
+    border: 1px solid rgba(0, 166, 136, 0.15);
+    font-size: 0.82rem;
+    color: var(--color-text-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .consent-status i {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+  }
+
+  .consent-status.all-accepted {
+    background: rgba(0, 166, 136, 0.1);
+    border-color: var(--color-accent);
+    color: var(--color-accent-dark);
+  }
+
+  [data-theme="dark"] .consent-status.all-accepted {
+    color: var(--color-accent-light);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 991px) {
+    .registro-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .registro-form-card,
+    .registro-consent-card {
+      padding: 20px;
+    }
+
+    .registro-section {
+      padding: 2rem 0;
+    }
+
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .form-row .input-group {
+      min-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  function initRegistroDatos() {
+    const form = document.getElementById('formRegistro') as HTMLFormElement;
+    const btnEnviar = document.getElementById('btnEnviar') as HTMLButtonElement;
+    const formError = document.getElementById('form-error') as HTMLDivElement;
+    const consentStatus = document.getElementById('consent-status');
+    const dateInput = document.getElementById('reg-fecha') as HTMLInputElement;
+    const motivoSelect = document.getElementById('reg-motivo') as HTMLSelectElement;
+    const motivoOtroContainer = document.getElementById('motivo-otro-container');
+
+    const checkboxIds = ['checkPrivacidad', 'checkLfpdppp', 'checkTerminos'];
+
+    // --- Fecha mínima: hoy ---
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+
+      dateInput.addEventListener('change', () => {
+        const parts = dateInput.value.split('-');
+        const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        const day = d.getDay();
+        if (day === 0 || day === 6) {
+          mostrarError('No hay servicio en fines de semana. Selecciona un día de Lunes a Viernes.');
+          dateInput.value = '';
+        }
+      });
+    }
+
+    // --- Motivo "Otro" ---
+    motivoSelect?.addEventListener('change', () => {
+      if (motivoOtroContainer) {
+        motivoOtroContainer.style.display = motivoSelect.value === 'Otro' ? 'flex' : 'none';
+      }
+    });
+
+    // --- Consentimientos ---
+    checkboxIds.forEach(id => {
+      const cb = document.getElementById(id) as HTMLInputElement;
+      cb?.addEventListener('change', actualizarEstadoBtnEnvio);
+    });
+
+    function todosAceptados(): boolean {
+      return checkboxIds.every(id => {
+        const cb = document.getElementById(id) as HTMLInputElement;
+        return cb?.checked;
+      });
+    }
+
+    function actualizarEstadoBtnEnvio() {
+      const allOk = todosAceptados();
+      if (btnEnviar) btnEnviar.disabled = !allOk;
+
+      // Actualizar bloques visuales
+      checkboxIds.forEach(id => {
+        const block = document.getElementById(`${id}-block`);
+        const cb = document.getElementById(id) as HTMLInputElement;
+        if (block && cb) {
+          block.classList.toggle('accepted', cb.checked);
+        }
+      });
+
+      // Actualizar status
+      if (consentStatus) {
+        if (allOk) {
+          consentStatus.classList.add('all-accepted');
+          consentStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Todos los documentos aceptados. Puedes enviar el formulario.</span>';
+        } else {
+          consentStatus.classList.remove('all-accepted');
+          const pending = checkboxIds.filter(id => {
+            const cb = document.getElementById(id) as HTMLInputElement;
+            return !cb?.checked;
+          }).length;
+          consentStatus.innerHTML = `<i class="fas fa-info-circle"></i><span>Faltan ${pending} documento(s) por aceptar.</span>`;
+        }
+      }
+    }
+
+    // --- Modales ---
+    document.querySelectorAll('[data-open-modal]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modalId = (btn as HTMLElement).dataset.openModal;
+        if (modalId) abrirModal(modalId);
+      });
+    });
+
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modalId = (btn as HTMLElement).dataset.closeModal;
+        if (modalId) cerrarModal(modalId);
+      });
+    });
+
+    document.querySelectorAll('.consent-modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) cerrarModal(overlay.id);
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.consent-modal-overlay.active').forEach(modal => {
+          cerrarModal(modal.id);
+        });
+      }
+    });
+
+    function abrirModal(id: string) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      const closeBtn = modal.querySelector('[data-close-modal]') as HTMLElement;
+      closeBtn?.focus();
+    }
+
+    function cerrarModal(id: string) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // --- Validación ---
+    function mostrarError(msg: string) {
+      if (!formError) return;
+      formError.style.display = 'flex';
+      formError.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${msg}`;
+      formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function ocultarError() {
+      if (formError) formError.style.display = 'none';
+    }
+
+    function esEmailValido(email: string): boolean {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function validarFormulario(): boolean {
+      ocultarError();
+
+      const nombre = (document.getElementById('reg-nombre') as HTMLInputElement)?.value.trim();
+      const apellidos = (document.getElementById('reg-apellidos') as HTMLInputElement)?.value.trim();
+      const email = (document.getElementById('reg-email') as HTMLInputElement)?.value.trim();
+      const telefono = (document.getElementById('reg-telefono') as HTMLInputElement)?.value.trim();
+      const fecha = (document.getElementById('reg-fecha') as HTMLInputElement)?.value;
+      const motivo = (document.getElementById('reg-motivo') as HTMLSelectElement)?.value;
+
+      if (!nombre || !apellidos || !email || !telefono || !fecha || !motivo) {
+        mostrarError('Complete todos los campos requeridos.');
+        const firstEmpty = form?.querySelector('input:invalid, select:invalid') as HTMLElement;
+        firstEmpty?.focus();
+        return false;
+      }
+
+      if (!esEmailValido(email)) {
+        mostrarError('Ingrese un correo electrónico válido.');
+        (document.getElementById('reg-email') as HTMLElement)?.focus();
+        return false;
+      }
+
+      if (!/^\d{10}$/.test(telefono.replace(/\D/g, ''))) {
+        mostrarError('El teléfono debe tener 10 dígitos.');
+        (document.getElementById('reg-telefono') as HTMLElement)?.focus();
+        return false;
+      }
+
+      if (motivo === 'Otro') {
+        const otro = (document.getElementById('reg-motivo-otro') as HTMLInputElement)?.value.trim();
+        if (!otro) {
+          mostrarError('Especifica el motivo de tu visita.');
+          (document.getElementById('reg-motivo-otro') as HTMLElement)?.focus();
+          return false;
+        }
+      }
+
+      if (!todosAceptados()) {
+        mostrarError('Debe aceptar todos los documentos legales para continuar.');
+        const firstUnchecked = checkboxIds.find(id => {
+          const cb = document.getElementById(id) as HTMLInputElement;
+          return !cb?.checked;
+        });
+        if (firstUnchecked) {
+          document.getElementById(`${firstUnchecked}-block`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return false;
+      }
+
+      return true;
+    }
+
+    // --- Envío ---
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validarFormulario()) return;
+
+      const nombre = (document.getElementById('reg-nombre') as HTMLInputElement).value.trim();
+      const apellidos = (document.getElementById('reg-apellidos') as HTMLInputElement).value.trim();
+      const email = (document.getElementById('reg-email') as HTMLInputElement).value.trim();
+      const telefono = (document.getElementById('reg-telefono') as HTMLInputElement).value.trim();
+      const fecha = (document.getElementById('reg-fecha') as HTMLInputElement).value;
+      const motivoSelect = document.getElementById('reg-motivo') as HTMLSelectElement;
+      let motivo = motivoSelect.value;
+      if (motivo === 'Otro') {
+        motivo = (document.getElementById('reg-motivo-otro') as HTMLInputElement).value.trim();
+      }
+
+      // Guardar consentimientos en localStorage
+      const consentRecord = {
+        privacidad: true,
+        lfpdppp: true,
+        terminos: true,
+        timestamp: new Date().toISOString(),
+        email
+      };
+      localStorage.setItem('consent_record', JSON.stringify(consentRecord));
+
+      btnEnviar.disabled = true;
+      btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+      try {
+        const formData = new FormData();
+        formData.append('nombre', nombre);
+        formData.append('apellidos', apellidos);
+        formData.append('correo', email);
+        formData.append('telefono', telefono);
+        formData.append('fecha', fecha);
+        formData.append('motivo', motivo);
+        formData.append('consentimiento_privacidad', 'true');
+        formData.append('consentimiento_lfpdppp', 'true');
+        formData.append('consentimiento_terminos', 'true');
+        formData.append('consent_timestamp', consentRecord.timestamp);
+
+        const { endpoints } = await import('../config/api.js');
+        const res = await fetch(endpoints.register, {
+          method: 'POST',
+          headers: { 'ngrok-skip-browser-warning': 'true' },
+          body: formData
+        });
+
+        const json = await res.json();
+
+        if (res.ok) {
+          ocultarError();
+          form.reset();
+          checkboxIds.forEach(id => {
+            const cb = document.getElementById(id) as HTMLInputElement;
+            if (cb) cb.checked = false;
+          });
+          actualizarEstadoBtnEnvio();
+          alert(`¡Registro exitoso! Gracias, ${nombre} ${apellidos}. Recibirás un correo de confirmación.`);
+        } else {
+          mostrarError(json.error || 'No se pudieron enviar los datos. Intenta nuevamente.');
+        }
+      } catch {
+        mostrarError('No se pudo conectar con el servidor. Verifica tu conexión e intenta nuevamente.');
+      } finally {
+        btnEnviar.disabled = !todosAceptados();
+        btnEnviar.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Registro';
+      }
+    });
+
+    // Init
+    actualizarEstadoBtnEnvio();
+  }
+
+  document.addEventListener('DOMContentLoaded', initRegistroDatos);
+  document.addEventListener('astro:page-load', initRegistroDatos);
+</script>
