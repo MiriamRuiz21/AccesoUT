@@ -1,5 +1,4 @@
-export const API_URL = "https://unexcused-temerariously-daria.ngrok-free.dev";
-
+export const API_URL = "https://kairos-api.duckdns.org";
 export const endpoints = {
     departamentos:  `${API_URL}/api/department`,
     register:       `${API_URL}/api/visits/register`,
