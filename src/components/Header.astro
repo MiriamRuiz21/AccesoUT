@@ -8,9 +8,7 @@ const currentPath = Astro.url.pathname;
   <div class="top-bar">
     <div class="container top-content">
       <div class="logos">
-        <img src="/logo-gobierno.png" alt="" class="logo-img" />
-        <div class="separator"></div>
-        <span class="uni-name">UT <strong>San Juan</strong></span>
+<span class="uni-name">UT <strong>San Juan</strong></span>
       </div>
       <div class="top-links">
         <a href="https://www.utsjr.edu.mx" target="_blank">Portal UTSJR</a>
@@ -74,19 +72,7 @@ const currentPath = Astro.url.pathname;
     gap: 15px;
   }
 
-  .logo-img {
-    height: 30px;
-    width: auto;
-    object-fit: contain;
-  }
-
-  .separator {
-    width: 1px;
-    height: 24px;
-    background: var(--color-border, #cccccc);
-  }
-
-  .uni-name {
+.uni-name {
     font-size: 1.05rem;
     color: var(--color-text, #333333);
     letter-spacing: -0.3px;
