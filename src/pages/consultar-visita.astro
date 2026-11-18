@@ -61,6 +61,9 @@ import Footer from '../components/Footer.astro';
             </div>
             <div class="session-actions">
               <span class="session-timer" id="sessionTimer"></span>
+              <button class="btn-historial" id="verHistorialBtn">
+                <i class="fas fa-clipboard-list"></i> Historial
+              </button>
               <button class="btn-logout" id="cerrarSesionBtn">
                 <i class="fas fa-sign-out-alt"></i> Cerrar sesión
               </button>
@@ -275,6 +278,26 @@ import Footer from '../components/Footer.astro';
     font-weight: 600;
     color: var(--color-text-muted, #A0AEC0);
     font-family: var(--font-heading, 'Outfit', sans-serif);
+  }
+
+  .btn-historial {
+    padding: 6px 14px;
+    border: 1.5px solid var(--color-accent, #00A688);
+    border-radius: var(--radius-sm, 8px);
+    background: transparent;
+    color: var(--color-accent, #00A688);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.25s ease;
+  }
+
+  .btn-historial:hover {
+    background: var(--color-accent, #00A688);
+    color: white;
   }
 
   .btn-logout {
@@ -652,6 +675,7 @@ import Footer from '../components/Footer.astro';
     const reenviarCodigoBtn = document.getElementById('reenviarCodigoBtn') as HTMLButtonElement;
     const cambiarCorreoBtn = document.getElementById('cambiarCorreoBtn') as HTMLButtonElement;
     const cerrarSesionBtn = document.getElementById('cerrarSesionBtn') as HTMLButtonElement;
+    const verHistorialBtn = document.getElementById('verHistorialBtn') as HTMLButtonElement;
     const correoEnviado = document.getElementById('correoEnviado')!;
     const correoSesion = document.getElementById('correoSesion')!;
     const sessionTimer = document.getElementById('sessionTimer')!;
@@ -903,7 +927,6 @@ import Footer from '../components/Footer.astro';
           }
         });
       } catch {
-        // Ignora errores de red al cerrar sesión
       }
       clearSession();
       showStep('correo');
@@ -1059,6 +1082,7 @@ import Footer from '../components/Footer.astro';
       correoInput.focus();
     });
 
+    verHistorialBtn.addEventListener('click', buscarVisitas);
     cerrarSesionBtn.addEventListener('click', cerrarSesion);
   }
 
